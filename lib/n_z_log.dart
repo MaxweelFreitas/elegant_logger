@@ -544,9 +544,10 @@ List<String> fillText({
 }) {
   List<String> content = [];
   int numOfChar = 0;
-  int padRight = 0;
 
-  final divSpace = divider.length + 2;
+  // Considerando dois dividers e dois espaços
+  final divSpace = divider.length * 2 + 2;
+
   final setOfWords = labelWords + messageWords;
 
   if (setOfWords.isNotEmpty) {
@@ -554,28 +555,37 @@ List<String> fillText({
       numOfChar = content.join(' ').length;
       int numCharWithSpaces = numOfChar + divSpace;
 
-      if (content.isNotEmpty || (numCharWithSpaces <= maxCharsPerLine)) {
-        final word = setOfWords[i];
-        final currentWord = setOfWords[i].length;
-        int lenNewWord = numCharWithSpaces + 1 + currentWord;
+      final word = setOfWords[i];
+      final currentWord = setOfWords[i].length;
+      int lenNewWord = numCharWithSpaces + currentWord;
 
-        if (lenNewWord <= maxCharsPerLine) {
-          content.add(setOfWords[i]);
-        } else {
-          break;
-        }
+      // Adiciona espaço se não for a primeira palavra
+      if (content.isNotEmpty) {
+        lenNewWord += 1; // Espaco para separar palavras
+      }
+
+      if (lenNewWord < maxCharsPerLine) {
+        content.add(word);
       } else {
         break;
       }
     }
 
-    // Calcular espaço restante necessário para completar a linha
-    final charsNoSpaces = content.join(' ').trim().length;
-    padRight = maxCharsPerLine - (charsNoSpaces + divSpace);
+    // Adiciona o padding à direita para completar a linha
+    // Adicionando o +1 pro calculo bater com o maxCharsPerLine, pois a linha tava ficando com tamanho igual ao maxCharsPerLine + 1
+    final charsWithSpaces = content.join(' ').length;
+    int padRight = maxCharsPerLine - (charsWithSpaces + divSpace + 1);
 
-    // Adicionar espaço para completar a linha
-    if (charsNoSpaces > 0) {
+    if (padRight > 0) {
       content.add(''.padRight(padRight));
+    }
+
+    // Formatar a linha com os dividers
+    String line = '$divider ${content.join(' ')} $divider';
+
+    // Ajustar o comprimento da linha para garantir que seja exato
+    if (line.length < maxCharsPerLine) {
+      line = line.padRight(maxCharsPerLine - 1) + divider;
     }
 
     // TODO: Line Colored Printer
