@@ -45,8 +45,7 @@ void main() {
     final a = line(
       divider: '|',
       labelColor: XTermColor.blue,
-      label:
-          'Comentários utilizado para facilitar o entendimento em ambiente de debug de código:',
+      label: 'Comentários utilizado para facilitar o entendimento em ambiente de debug de código:',
       messageColor: XTermColor.white,
       message:
           'Lorem ipsum dolor Amet. Explicabo iusto magni consectetur casamento et perspiciatis. deleniti qui tenetur expedita. Ut omnis aperiam aut neque perferendis', // et voluptatum nulla ab harum consequatur.',
