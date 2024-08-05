@@ -50,7 +50,7 @@ void main() {
       message:
           'Lorem ipsum dolor Amet. Explicabo iusto magni consectetur casamento et perspiciatis. deleniti qui tenetur expedita. Ut omnis aperiam aut neque perferendis', // et voluptatum nulla ab harum consequatur.',
       dividerColor: XTermColor.red,
-      maxCharsPerLine: 64,
+      maxCharsPerLine: 60,
     );
     print(a);
   });

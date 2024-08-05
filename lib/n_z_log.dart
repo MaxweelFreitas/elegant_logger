@@ -540,13 +540,12 @@ List<String> fillText({
   List<String> messageWords = const [],
   String divider = '|',
   int maxCharsPerLine = 0,
-  int indexStart = 0,
 }) {
   List<String> content = [];
   int numOfChar = 0;
 
-  // Considerando dois dividers e dois espaços
-  final divSpace = divider.length * 2 + 2;
+  // Considerando dois dividers
+  final divSpace = divider.length * 2;
 
   final setOfWords = labelWords + messageWords;
 
@@ -561,7 +560,7 @@ List<String> fillText({
 
       // Adiciona espaço se não for a primeira palavra
       if (content.isNotEmpty) {
-        lenNewWord += 1; // Espaco para separar palavras
+        lenNewWord += 1; // Espaço para separar palavras
       }
 
       if (lenNewWord < maxCharsPerLine) {
@@ -572,9 +571,8 @@ List<String> fillText({
     }
 
     // Adiciona o padding à direita para completar a linha
-    // Adicionando o +1 pro calculo bater com o maxCharsPerLine, pois a linha tava ficando com tamanho igual ao maxCharsPerLine + 1
     final charsWithSpaces = content.join(' ').length;
-    int padRight = maxCharsPerLine - (charsWithSpaces + divSpace + 1);
+    int padRight = maxCharsPerLine - (charsWithSpaces + divSpace);
 
     if (padRight > 0) {
       content.add(''.padRight(padRight));
@@ -588,8 +586,8 @@ List<String> fillText({
       line = line.padRight(maxCharsPerLine - 1) + divider;
     }
 
-    // TODO: Line Colored Printer
-    final p = _lineGenerator(
+    // Gerar linha colorida
+    final coloredLine = _lineGenerator(
       labelColor: labelColor,
       messageColor: messageColor,
       dividerColor: dividerColor,
@@ -599,7 +597,7 @@ List<String> fillText({
       content: content,
     );
 
-    print(p);
+    print(coloredLine);
 
     return content;
   } else {
