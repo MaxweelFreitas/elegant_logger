@@ -44,13 +44,14 @@ void main() {
   test('n z log a', () {
     final a = line(
       divider: '|',
-      labelColor: XTermColor.blue,
-      label: 'Comentários utilizado para facilitar o entendimento em ambiente de debug de código:',
-      messageColor: XTermColor.white,
+      labelColor: XTermColor.red,
+      label:
+          'Comentários utilizado para facilitar o entendimento em ambiente de debug de código:',
+      messageColor: XTermColor.red,
       message:
           'Lorem ipsum dolor Amet. Explicabo iusto magni consectetur casamento et perspiciatis. deleniti qui tenetur expedita. Ut omnis aperiam aut neque perferendis', // et voluptatum nulla ab harum consequatur.',
       dividerColor: XTermColor.red,
-      maxCharsPerLine: 60,
+      maxCharsPerLine: 70,
     );
     print(a);
   });
