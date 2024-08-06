@@ -24,7 +24,7 @@ class TagType {
   final String name;
   final String sufix;
 
-  TagType({
+  const TagType({
     this.prefix = ElegantBox.middleRight,
     this.icon = ElegantBox.noEmoji,
     this.nameBgColor = XTermColor.reset,
