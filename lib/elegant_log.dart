@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:poc_ml/dtos/border_box.dart';
-import 'package:poc_ml/helpers/elegant_box.dart';
 import 'package:poc_ml/helpers/elegant_icons.dart';
 import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 import 'package:poc_ml/helpers/x_term/x_term_style.dart';
@@ -9,6 +8,7 @@ import 'dtos/log_entry_color.dart';
 import 'dtos/log_entry_content.dart';
 import 'dtos/tag_type.dart';
 import 'helpers/converter.dart';
+import 'helpers/draw_functions.dart';
 
 class ElegantLog {
   static const lineLength = 75;
@@ -239,70 +239,6 @@ String _showDateTime(DateTime dateTime) {
   return '$year-$month-$day $hour:$minute:$second';
 }
 
-String _horizontalDivider({int lineLength = 75, bool isDashed = false}) {
-  late final String lineType;
-  if (!isDashed) {
-    lineType = ElegantBox.line;
-  } else {
-    lineType = ElegantBox.dashedRight;
-  }
-  return List.filled(lineLength - 2, lineType).join();
-}
-
-void _drawTop({
-  String emoji = '',
-  String borderColor = XTermColor.white,
-  String boxTopLeftBorder = ElegantBox.topLeft,
-  String boxTopRightBorder = ElegantBox.topRight,
-  String logTypeColor = '',
-  String logType = '',
-  String boxMiddleRight = ElegantBox.middleRight,
-  String boxMiddleLeft = ElegantBox.middleLeft,
-  int lineLength = 75,
-}) {
-  if (logType.isEmpty) {
-    debugPrint(
-      '$borderColor$boxTopLeftBorder${_horizontalDivider(lineLength: lineLength)}$boxTopRightBorder${XTermStyle.reset}',
-    );
-  } else if (emoji.isNotEmpty && logType.isNotEmpty) {
-  } else if (emoji.isNotEmpty) {
-    final tag = '$boxMiddleRight$logTypeColor$emoji$logType$borderColor$boxMiddleLeft';
-    //calcular espaço caso venha apenas o icone
-    final lenWithIcon = lineLength - emoji.length;
-    //calcular o espaçõ caso venha um logType
-  } else if (logType.isNotEmpty) {}
-  //TypedTop ⇒ ╭┤⎕ ⏾⏾⏾⏾⏾ ├───────────────────────────────────────────────────────────────╮
-  //UnTyped  ⇒ ╭──────────────────────────────────────────────────────────────────────────╮
-}
-
-void _drawMedium({
-  String borderColor = XTermColor.white,
-  String boxMiddleRight = ElegantBox.middleRight,
-  String boxMiddleLeft = ElegantBox.middleLeft,
-  int lineLength = 75,
-  bool isDashed = false,
-}) {
-  //
-  //Dashed ⇒ ├╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶┤
-  //Lined  ⇒ ├──────────────────────────────────────────────────────────────────────────┤
-  debugPrint(
-    '$borderColor$boxMiddleLeft${_horizontalDivider(lineLength: lineLength, isDashed: isDashed)}$boxMiddleRight${XTermStyle.reset}',
-  );
-}
-
-void _drawBottom({
-  String borderColor = XTermColor.white,
-  String boxBottomLeftBorder = ElegantBox.bottomLeft,
-  String boxBottomRightBorder = ElegantBox.bottomRight,
-  int lineLength = 75,
-}) {
-  //Example
-  //Lined  ⇒ ╰──────────────────────────────────────────────────────────────────────────╯
-  debugPrint(
-    '$borderColor$boxBottomLeftBorder${_horizontalDivider(lineLength: lineLength)}$boxBottomRightBorder${XTermStyle.reset}',
-  );
-}
-
 void _box({
   String emoji = '',
   BorderBox borders = const BorderBox(),
@@ -332,7 +268,7 @@ void _box({
   bool forcePrint = false,
 }) {
   if (kDebugMode || forcePrint) {
-    _drawTop(
+    DrawFunctions.drawTop(
       emoji: emoji,
       borderColor: dividerColor,
       boxTopLeftBorder: borders.boxTopLeftBorder,
@@ -356,7 +292,7 @@ void _box({
       );
     }
     if (title.isNotEmpty && isDated) {
-      _drawMedium(
+      DrawFunctions.drawMedium(
         borderColor: dividerColor,
         boxMiddleRight: borders.boxMiddleRight,
         boxMiddleLeft: borders.boxMiddleLeft,
@@ -378,7 +314,7 @@ void _box({
     }
 
     if (isDated && source.isNotEmpty) {
-      _drawMedium(
+      DrawFunctions.drawMedium(
         borderColor: dividerColor,
         boxMiddleRight: borders.boxMiddleRight,
         boxMiddleLeft: borders.boxMiddleRight,
@@ -403,7 +339,7 @@ void _box({
     }
 
     if (source.isNotEmpty && message.isNotEmpty) {
-      _drawMedium(
+      DrawFunctions.drawMedium(
         borderColor: dividerColor,
         boxMiddleRight: borders.boxMiddleRight,
         boxMiddleLeft: borders.boxMiddleRight,
@@ -438,7 +374,7 @@ void _box({
       );
     }
 
-    _drawBottom(
+    DrawFunctions.drawBottom(
       borderColor: dividerColor,
       boxBottomLeftBorder: borders.boxBottomLeftBorder,
       boxBottomRightBorder: borders.boxBottomRightBorder,
@@ -506,7 +442,7 @@ List<String> fillText({
   int numOfChar = 0;
 
   // Considerando dois dividers e dois espaços
-  final divSpace = divider.length * 2 + 2;
+  final divSpace = divider.length * 2;
 
   final setOfWords = labelWords + messageWords;
 
@@ -526,6 +462,10 @@ List<String> fillText({
 
       if (lenNewWord < maxCharsPerLine) {
         content.add(word);
+      } else if (currentWord > maxCharsPerLine) {
+        List<String> chunks = splitString(word, maxCharsPerLine - 5);
+        content.addAll(chunks);
+        break;
       } else {
         break;
       }
@@ -535,7 +475,7 @@ List<String> fillText({
     // Adicionando o +1 pro calculo bater com o maxCharsPerLine, pois a linha tava ficando com tamanho igual ao maxCharsPerLine + 1
     //TODO: Verificar se o removeEscapes presta
     final charsWithSpaces = removeEscapedANSI(content.join(' ')).length;
-    int padRight = maxCharsPerLine - (charsWithSpaces + divSpace + 1);
+    int padRight = maxCharsPerLine - (charsWithSpaces + divSpace);
 
     if (padRight > 0) {
       content.add(''.padRight(padRight));
@@ -550,7 +490,8 @@ List<String> fillText({
     }
 
     // TODO: Line Colored Printer
-    final p = _lineGenerator(
+    // Gerar linha colorida
+    final coloredLine = _lineGenerator(
       labelColor: labelColor,
       messageColor: messageColor,
       dividerColor: dividerColor,
@@ -560,12 +501,21 @@ List<String> fillText({
       content: content,
     );
 
-    debugPrint(p);
+    print(coloredLine);
 
     return content;
   } else {
     return [];
   }
+}
+
+List<String> splitString(String text, int chunkSize) {
+  List<String> chunks = [];
+  for (int i = 0; i < text.length; i += chunkSize) {
+    int endIndex = (i + chunkSize < text.length) ? i + chunkSize : text.length;
+    chunks.add(text.substring(i, endIndex));
+  }
+  return chunks;
 }
 
 String _lineGenerator({
@@ -594,5 +544,9 @@ String _lineGenerator({
 
     result.write("$dividerColor$divider$reset");
   }
-  return result.toString();
+  var string = result.toString();
+  if (string.startsWith(r'[31m| [36mLink: ]8;;')) {
+    string.replaceAll(' ', '').trim();
+  }
+  return string;
 }
