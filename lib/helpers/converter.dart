@@ -1,5 +1,4 @@
 class Converter {
-  //TODO: Create a conversor from HEX to DECIMAL,
   static int hexToDec(String hexColor) {
     if (!_isValidHexadecimal(hexColor)) {
       throw ArgumentError("Invalid hexadecimal string");
@@ -14,11 +13,12 @@ class Converter {
       if (charCode >= 48 && charCode <= 57) {
         decVal += (charCode - 48) * base;
         base = base * 16;
+        //UPPERCASE 'A'-'F'
       } else if (charCode >= 65 && charCode <= 70) {
         decVal += (charCode - 55) * base;
         base = base * 16;
+        //lowercase 'a'-'f'
       } else if (charCode >= 97 && charCode <= 102) {
-        // for lowercase 'a'-'f'
         decVal += (charCode - 87) * base;
         base = base * 16;
       }
