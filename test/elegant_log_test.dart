@@ -19,8 +19,9 @@ void main() {
         labelMessage: 'Message pasdakdsnm asd asdmasm as dasdnmasmdkaskd a dasda:',
         message: 'Lorem Ipsum is simply dummy text of the .',
         // source: r'lib\n_z_log.dart',
-        linkText: 'Google',
-        url: 'https://www.google.com',
+        linkText: 'GoogleLinkGrande',
+        url:
+            'https://www.google.com/search?sca_esv=c1c83ae130d39436&sxsrf=ADLYWIJd-re6y0p4FKchn5C5AJFQNIk4yg:1722989539438&q=nado+sincronizado+olimpíadas&oi=ddle&ct=348045984&hl=pt-BR&sa=X&ved=0ahUKEwjx68mbzOGHAxXhpJUCHeifNNgQPQgL&biw=1516&bih=981&dpr=1',
       ),
       isDashed: true,
       lineLength: 40,

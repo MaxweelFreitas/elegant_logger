@@ -41,7 +41,7 @@ bool _isValidHexadecimal(String hexVal) {
 }
 
 String removeEscapedANSI(String input) {
-  // Define regex patterns to match escape sequences of the forms \x1B[...m and \x1B]8;;...url...\x1B\...url...\x1B]8;;\x1B\
+  // Define regex patterns to match escape sequences of the forms \x1B[...m and \x1B]8;;...url...\x1B\...text...\x1B]8;;\x1B\
   final regexAnsi = RegExp(r'\x1B\[.*?m');
   final regexUrl = RegExp(r'\x1B]8;;.*?\x1B\\.*?\x1B]8;;\x1B\\');
 
