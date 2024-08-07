@@ -61,6 +61,10 @@ void main() {
   });
 
   group('${XTermColor.red}RED${XTermColor.reset}      ⇒', () {
+    test('Should return the color RED   ⇒ \x1B[31m██', () {
+      expect(XTermColor.red, '\x1B[31m');
+    });
+
     test(
         'Should return failure when trying to pass the wrong red   value parameter < 0',
         () {
@@ -77,6 +81,9 @@ void main() {
   });
 
   group('${XTermColor.green}GREEN${XTermColor.reset}    ⇒', () {
+    test('Should return the color GREEN ⇒ \x1B[32m██', () {
+      expect(XTermColor.green, '\x1B[32m');
+    });
     test(
         'Should return failure when trying to pass the wrong green value parameter < 0',
         () {
@@ -94,6 +101,10 @@ void main() {
   });
 
   group('${XTermColor.blue}BLUE${XTermColor.reset}     ⇒', () {
+    test('Should return the color BLUE  ⇒ \x1B[34m██', () {
+      expect(XTermColor.blue, '\x1B[34m');
+    });
+
     test(
         'Should return failure when trying to pass the wrong blue  value parameter < 0',
         () {
@@ -106,6 +117,85 @@ void main() {
         () {
       final result = XTermColor.rgbFg(220, 150, 500);
       expect(result, 'Blue color is invalid![needs to be less than 256]');
+    });
+  });
+
+  group('${XTermColor.hexFg('0xFF40E0D0')}hexFg${XTermColor.reset}    ⇒', () {
+    test('Should return the color hexFg   ⇒ \x1B[38;2;64;224;208m██\x1B[0m',
+        () {
+      final result = XTermColor.hexFg('0xFF40E0D0');
+      expect(result, '\x1B[38;2;64;224;208m');
+    });
+
+    test(
+        'should receive #, 0x, &H as prefix and h as sufix  as foreground color',
+        () {
+      final colors = [
+        '#FF5733', '0x4CAF50', '&H3498DB', '9C27B0h', '#FA3', '0xF1A', //
+        '0xFFFF5733', '0x80FFFFFF',
+      ];
+
+      List<String> resultColors = [];
+
+      for (var color in colors) {
+        resultColors.add(XTermColor.hexFg(color));
+      }
+
+      expect(resultColors, [
+        '\x1B[38;2;255;87;51m', '\x1B[38;2;76;175;80m', //
+        '\x1B[38;2;52;152;219m', '\x1B[38;2;156;39;176m', //
+        '\x1B[38;2;255;170;51m', '\x1B[38;2;255;17;170m', //
+        '\x1B[38;2;255;87;51m', '\x1B[38;2;255;255;255m', //
+      ]);
+    });
+
+    test('should return a invalid format message to this hexFg string', () {
+      final resultColor = XTermColor.hexFg('Hoje');
+
+      expect(
+        resultColor,
+        'FormatException: Invalid hexdecimal format',
+      );
+    });
+  });
+
+  group(
+      '${XTermColor.hexBg('0xFF40E0D0')}${XTermColor.hexFg('0x7F00B2')}hexBg${XTermColor.reset}    ⇒',
+      () {
+    test('Should return the color hexFg   ⇒ \x1B[48;2;64;224;208m..', () {
+      final result = XTermColor.hexBg('0xFF40E0D0');
+      expect(result, '\x1B[48;2;64;224;208m');
+    });
+
+    test(
+        'should receive #, 0x, &H as prefix and h as sufix as background color',
+        () {
+      final colors = [
+        '#FF5733', '0x4CAF50', '&H3498DB', '9C27B0h', '#FA3', '0xF1A', //
+        '0xFFFF5733', '0x80FFFFFF',
+      ];
+
+      List<String> resultColors = [];
+
+      for (var color in colors) {
+        resultColors.add(XTermColor.hexBg(color));
+      }
+
+      expect(resultColors, [
+        '\x1B[48;2;255;87;51m', '\x1B[48;2;76;175;80m', //
+        '\x1B[48;2;52;152;219m', '\x1B[48;2;156;39;176m', //
+        '\x1B[48;2;255;170;51m', '\x1B[48;2;255;17;170m', //
+        '\x1B[48;2;255;87;51m', '\x1B[48;2;255;255;255m', //
+      ]);
+    });
+
+    test('should return a invalid format message to this hexBg string', () {
+      final resultColor = XTermColor.hexBg('Hoje');
+
+      expect(
+        resultColor,
+        'FormatException: Invalid hexdecimal format',
+      );
     });
   });
 }
