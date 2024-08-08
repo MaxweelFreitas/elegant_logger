@@ -9,6 +9,7 @@ import 'dtos/log_entry_content.dart';
 import 'dtos/tag_type.dart';
 import 'helpers/converter.dart';
 import 'helpers/draw_functions.dart';
+import 'services/save_log_service.dart';
 
 class ElegantLog {
   static const lineLength = 75;
@@ -383,7 +384,7 @@ void _box({
   }
 }
 
-String drawText({
+Future<String> drawText({
   String label = '',
   String message = '',
   String divider = '',
@@ -391,17 +392,21 @@ String drawText({
   String labelColor = '',
   String messageColor = '',
   int maxCharsPerLine = 60,
-}) {
+  bool printLogToFile = true,
+}) async {
   List<List<String>> corpus = [];
   List<String> labelWords = label.split(' ');
   List<String> messageWords = message.split(' ');
+  String _logPath = '';
 
   int lastUsedWord = 0;
 
   final setOfWords = labelWords + messageWords;
 
+  final SaveLogService saveService = TxtSaveLogService();
+
   do {
-    final b = fillText(
+    final (b, logLine) = fillText(
       lastIndex: lastUsedWord,
       dividerColor: XTermColor.red,
       labelColor: XTermColor.cyan,
@@ -417,17 +422,24 @@ String drawText({
         b.removeAt(b.length - 1);
       }
       lastUsedWord += b.length;
+      if (printLogToFile) {
+        _logPath = await saveService.saveLog(logLine, filePath: _logPath);
+      }
     } else {
       break;
     }
   } while (setOfWords.length > lastUsedWord);
+
+  if (printLogToFile) {
+    debugPrint('View logFile in $_logPath');
+  }
 
   // print(corpus);
 
   return '';
 }
 
-List<String> fillText({
+(List<String>, String) fillText({
   int lastIndex = 0,
   String labelColor = '',
   String messageColor = '',
@@ -503,9 +515,9 @@ List<String> fillText({
 
     print(coloredLine);
 
-    return content;
+    return (content, line);
   } else {
-    return [];
+    return (<String>[], '');
   }
 }
 

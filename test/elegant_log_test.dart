@@ -33,9 +33,9 @@ void main() {
     }
   });
 
-  test('n z log a', () {
+  test('n z log a', () async {
     final stopwatch = Stopwatch()..start();
-    final a = drawText(
+    final a = await drawText(
       labelColor: XTermColor.cyan,
       label: 'Comentários utilizado para facilitar o entendimento em ambiente de debug de código:',
       messageColor: XTermColor.white,
