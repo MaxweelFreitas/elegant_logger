@@ -1,4 +1,3 @@
-///
 ///## XTermColor
 ///
 ///
@@ -10,13 +9,11 @@
 /// sequences for coloring text in terminals.
 ///
 class XTermColor {
-  ///
   /// Represents the ANSI escape sequence for reset colors.
   ///
   static const reset = '\x1B[0m';
 
   // ForegroundColors
-
   /// Represents the ANSI escape sequence for the foreground color black.
   static const black = '\x1B[30m';
 
@@ -116,7 +113,6 @@ class XTermColor {
   /// Represents the ANSI escape sequence for the background color bright white.
   static const whiteBrightBg = '\x1B[107m';
 
-  ///
   /// Converts a color code from the xterm-256color palette to a foreground ANSI escape sequence.
   ///
   /// [codeColor] - The color code (0-255) from the xterm-256color palette.
@@ -135,7 +131,6 @@ class XTermColor {
     }
   }
 
-  ///
   /// Converts a color code from the xterm-256color palette to a background ANSI escape sequence.
   ///
   /// [codeColor] - The color code (0-255) from the xterm-256color palette.
@@ -153,7 +148,6 @@ class XTermColor {
     }
   }
 
-  ///
   /// Converts RGB values to a foreground ANSI escape sequence.
   ///
   /// [red]   - The red component of the color (0-255).
@@ -181,7 +175,6 @@ class XTermColor {
     }
   }
 
-  ///
   /// Converts RGB values to a background ANSI escape sequence.
   ///
   /// [red] - The red component of the color (0-255).
@@ -209,7 +202,6 @@ class XTermColor {
     }
   }
 
-  ///
   /// Converts a HEX color code to a foreground ANSI escape sequence.
   ///
   /// [hexColor] - The HEX color code (e.g., '#FF5733', '0xFF5733', etc.).
@@ -314,5 +306,68 @@ class XTermColor {
     int blue = int.parse(cleanedColor.substring(4, 6), radix: 16);
 
     return '\x1B[48;2;$red;$green;${blue}m';
+  }
+
+  static String printColors() {
+    var tableColor = StringBuffer();
+    //Standard Colors
+    tableColor.writeln(
+        'Standard Colors                             High-intensity Colors');
+    for (var i = 0; i <= 7; i++) {
+      if (i < 10) {
+        tableColor.write('${std256BG(i)}  ${std256FG(7)}$i  $reset');
+      }
+    }
+    tableColor.write('    ');
+    //High-intensity Colors
+    for (var i = 8; i <= 15; i++) {
+      if (i < 10) {
+        tableColor.write('${std256BG(i)}  ${std256FG(7)}$i  $reset');
+      } else {
+        tableColor.write('${std256BG(i)}  ${std256FG(7)}$i  $reset');
+      }
+    }
+    tableColor.write('\n\n');
+
+    //
+    tableColor.writeln('Left');
+    List<List<int>> rangesFirstLoop = [
+      [16, 33], [52, 69], [88, 105], [124, 141], [160, 177], [196, 213] //
+    ];
+
+    for (var range in rangesFirstLoop) {
+      for (var j = range[0]; j <= range[1]; j++) {
+        var formattedNumber = j.toString().padLeft(3, '0');
+        tableColor
+            .write('${std256BG(j)} ${std256FG(7)}$formattedNumber $reset');
+      }
+      tableColor.write('\n');
+    }
+    tableColor.write('\n');
+    tableColor.writeln('Right');
+    List<List<int>> rangesSecondLoop = [
+      [34, 51], [70, 87], [106, 123], [142, 159], [178, 195], [214, 231] //
+    ];
+
+    for (var range in rangesSecondLoop) {
+      for (var j = range[0]; j <= range[1]; j++) {
+        var formattedNumber = j.toString().padLeft(3, '0');
+        tableColor
+            .write('${std256BG(j)} ${std256FG(0)}$formattedNumber $reset');
+      }
+      tableColor.write('\n');
+    }
+    tableColor.write('\n');
+    //GrayScale
+    tableColor.writeln('Gray Scale Color');
+    for (var i = 232; i <= 243; i++) {
+      tableColor.write('${std256BG(i)}  ${std256FG(7)}$i  $reset');
+    }
+    tableColor.write('\n');
+    for (var i = 244; i <= 255; i++) {
+      tableColor.write('${std256BG(i)}  ${std256FG(0)}$i  $reset');
+    }
+    tableColor.write('\n\n');
+    return tableColor.toString();
   }
 }
