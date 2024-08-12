@@ -50,7 +50,8 @@ class NZLog {
     bool forcePrint = false,
   }) {
     _box(
-      logType: '${NZLog.middleRightCorner}$emoji Error ${NZLog.middleleftCorner}',
+      logType:
+          '${NZLog.middleRightCorner}$emoji Error ${NZLog.middleleftCorner}',
       title: title,
       msg: msg,
       source: source,
@@ -76,7 +77,8 @@ class NZLog {
     bool forcePrint = false,
   }) {
     _box(
-      logType: '${NZLog.middleRightCorner}$emoji Warning ${NZLog.middleleftCorner}',
+      logType:
+          '${NZLog.middleRightCorner}$emoji Warning ${NZLog.middleleftCorner}',
       title: title,
       msg: msg,
       source: source,
@@ -102,7 +104,8 @@ class NZLog {
     bool forcePrint = false,
   }) {
     _box(
-      logType: '${NZLog.middleRightCorner}$emoji Info ${NZLog.middleleftCorner}',
+      logType:
+          '${NZLog.middleRightCorner}$emoji Info ${NZLog.middleleftCorner}',
       title: title,
       msg: msg,
       source: source,
@@ -128,7 +131,8 @@ class NZLog {
     bool forcePrint = false,
   }) {
     _box(
-      logType: '${NZLog.middleRightCorner}$emoji Debug ${NZLog.middleleftCorner}',
+      logType:
+          '${NZLog.middleRightCorner}$emoji Debug ${NZLog.middleleftCorner}',
       title: title,
       msg: msg,
       source: source,
@@ -335,21 +339,28 @@ String formatMessageWithColorsLn({
 
   // Adiciona a primeira linha com a label
   String firstLine = "$dividerColor$divider $labelColor$label $messageColor";
-  int firstLineLength = firstLine.length - dividerColor.length - labelColor.length - messageColor.length;
+  int firstLineLength = firstLine.length -
+      dividerColor.length -
+      labelColor.length -
+      messageColor.length;
 
   if (firstLineLength > maxCharsPerLine) {
     // Divide a label em palavras para tratar a quebra de linha
     List<String> labelWords = label.split(' ');
     String currentLabelLine = "$dividerColor$divider $labelColor";
-    int currentLabelLineLength = divider.length + 1; // considerando o divider e o espaço após ele
+    int currentLabelLineLength =
+        divider.length + 1; // considerando o divider e o espaço após ele
 
     for (int i = 0; i < labelWords.length; i++) {
       String word = labelWords[i];
 
-      if (currentLabelLineLength + word.length + 1 > maxCharsPerLine - fixedChars) {
+      if (currentLabelLineLength + word.length + 1 >
+          maxCharsPerLine - fixedChars) {
         // Preenche a linha atual com espaços em branco até o limite
-        int remainingSpace = maxCharsPerLine - currentLabelLineLength - fixedChars;
-        currentLabelLine = currentLabelLine.padRight(currentLabelLine.length + remainingSpace);
+        int remainingSpace =
+            maxCharsPerLine - currentLabelLineLength - fixedChars;
+        currentLabelLine =
+            currentLabelLine.padRight(currentLabelLine.length + remainingSpace);
 
         // Adiciona a linha atual ao resultado
         result.writeln("$currentLabelLine$dividerColor$divider");
@@ -365,7 +376,8 @@ String formatMessageWithColorsLn({
 
     // Preenche a última linha da label com espaços em branco até o limite
     int remainingSpace = maxCharsPerLine - currentLabelLineLength - fixedChars;
-    currentLabelLine = currentLabelLine.padRight(currentLabelLine.length + remainingSpace);
+    currentLabelLine =
+        currentLabelLine.padRight(currentLabelLine.length + remainingSpace);
     result.writeln("$currentLabelLine$dividerColor$divider");
   } else {
     // Preenche a linha da label com espaços em branco até o limite
@@ -597,7 +609,7 @@ List<String> fillText({
       content: content,
     );
 
-    print(coloredLine);
+    debugPrint(coloredLine);
 
     return content;
   } else {

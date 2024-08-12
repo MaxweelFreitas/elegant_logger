@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:poc_ml/helpers/elegant_json.dart';
 import 'package:poc_ml/helpers/x_term/x_term_color.dart';
@@ -33,6 +34,6 @@ void main() {
       valueColor: XTermColor.magenta,
     );
 
-    print(result);
+    debugPrint(result);
   });
 }

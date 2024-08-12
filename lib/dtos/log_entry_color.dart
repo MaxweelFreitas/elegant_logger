@@ -2,7 +2,6 @@ import '../helpers/x_term/x_term_color.dart';
 
 class LogEntryColor {
   final String dividerColor;
-  final String logTypeColor;
   final String labelTitleColor;
   final String titleColor;
   final String labelTimeColor;
@@ -12,13 +11,12 @@ class LogEntryColor {
   final String timeColor;
 
   const LogEntryColor({
-    this.dividerColor = XTermColor.red,
-    this.logTypeColor = XTermColor.red,
-    this.labelTitleColor = XTermColor.red,
-    this.titleColor = XTermColor.red,
-    this.labelTimeColor = XTermColor.red,
+    this.dividerColor = XTermColor.white,
+    this.labelTitleColor = XTermColor.white,
+    this.titleColor = XTermColor.white,
+    this.labelTimeColor = XTermColor.white,
     this.timeColor = '',
-    this.labelMessageColor = XTermColor.red,
+    this.labelMessageColor = XTermColor.white,
     this.messageColor = XTermColor.white,
     this.sourceColor = XTermColor.white,
   });

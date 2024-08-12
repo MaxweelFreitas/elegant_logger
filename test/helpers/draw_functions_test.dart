@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:poc_ml/dtos/log_level.dart';
 import 'package:poc_ml/helpers/draw_functions.dart';
@@ -6,7 +7,7 @@ void main() {
   group('drawFunctions TOP ⇒', () {
     test('simple', () {
       final result = DrawFunctions.drawTop();
-      print(result);
+      debugPrint(result);
     });
 
     test('icon left', () {
@@ -17,7 +18,7 @@ void main() {
         ),
       );
 
-      print(result);
+      debugPrint(result);
     });
 
     test('icon right', () {
@@ -28,7 +29,7 @@ void main() {
         ),
       );
 
-      print(result);
+      debugPrint(result);
     });
 
     test('icon middle', () {
@@ -38,7 +39,7 @@ void main() {
         ),
       );
 
-      print(result);
+      debugPrint(result);
     });
 
     test('icon + name left', () {
@@ -50,7 +51,7 @@ void main() {
         ),
       );
 
-      print(result);
+      debugPrint(result);
     });
     test('icon + name right', () {
       final result = DrawFunctions.drawTop(
@@ -61,7 +62,7 @@ void main() {
         ),
       );
 
-      print(result);
+      debugPrint(result);
     });
     test('icon + name middle', () {
       final result = DrawFunctions.drawTop(
@@ -71,19 +72,19 @@ void main() {
         ),
       );
 
-      print(result);
+      debugPrint(result);
     });
 
     test('medium', () {
       final result = DrawFunctions.drawMedium(isDashed: true);
 
-      print(result);
+      debugPrint(result);
     });
 
     test('bottom', () {
       final result = DrawFunctions.drawBottom();
 
-      print(result);
+      debugPrint(result);
     });
   });
 }

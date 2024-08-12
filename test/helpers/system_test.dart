@@ -6,13 +6,14 @@ import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 void main() {
   test('📂 ${XTermColor.green}getFileName', () async {
     String fileName;
+
     try {
       throw ArgumentError('Invalid argument');
     } catch (e, stacktrace) {
       fileName = System.getFileName(stacktrace);
     }
 
-    expect(removeEscapedANSI(fileName), '📂 File name: 📄 system_test.dart');
+    expect(removeEscapedANSI(fileName), 'test/helpers/system_test.dart:10:7');
   });
 
   test('🗃️ ${XTermColor.green}getStackTraceLinks', () async {

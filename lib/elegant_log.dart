@@ -16,20 +16,94 @@ class ElegantLog {
 
 // '${ElegantBox.middleRight}$emoji Error ${ElegantBox.middleLeft}'
   static void error({
+    LogLevel logLevel = const LogLevel(
+      icon: ElegantIcons.errorIcon,
+      name: ' Error',
+      nameColor: XTermColor.red,
+    ),
     BorderBox borders = const BorderBox(),
     LogEntryContent logEntryContent = const LogEntryContent(),
-    LogEntryColor logEntryColor = const LogEntryColor(),
+    LogEntryColor logEntryColor = const LogEntryColor(
+      dividerColor: XTermColor.red,
+      labelTimeColor: XTermColor.red,
+      timeColor: XTermColor.white,
+      labelTitleColor: XTermColor.red,
+      titleColor: XTermColor.white,
+      labelMessageColor: XTermColor.red,
+      messageColor: XTermColor.white,
+      sourceColor: XTermColor.white,
+    ),
     int lineLength = 75,
     bool isDated = true,
     bool isDashed = false,
     bool forcePrint = false,
     bool printLogToFile = true,
+    LevelAlignment levelAlignment = LevelAlignment.left,
+  }) {
+    _box(
+      logLevel: logLevel,
+      levelAlignment: levelAlignment,
+      borders: borders,
+      dividerColor: logEntryColor.dividerColor,
+      divider: logEntryContent.divider,
+      labelTitleColor: logEntryColor.labelTitleColor,
+      labelTitle: logEntryContent.labelTitle,
+      titleColor: logEntryColor.titleColor,
+      title: logEntryContent.title,
+      labelTimeColor: logEntryColor.labelTimeColor,
+      labelTime: logEntryContent.labelTime,
+      timeColor: logEntryColor.timeColor,
+      time: logEntryContent.time,
+      labelMessageColor: logEntryColor.labelMessageColor,
+      labelMessage: logEntryContent.labelMessage,
+      messageColor: logEntryColor.messageColor,
+      message: logEntryContent.message,
+      sourceColor: logEntryColor.sourceColor,
+      source: logEntryContent.source,
+      lineLength: lineLength,
+      url: logEntryContent.url,
+      linkText: logEntryContent.linkText,
+      isDated: isDated,
+      isDashed: isDashed,
+      forcePrint: forcePrint,
+      printLogToFile: printLogToFile,
+      traceMessage: logEntryContent.traceMessage,
+    );
+  }
+
+  static void warning({
     LogLevel logLevel = const LogLevel(
-      icon: ElegantIcons.errorIcon,
-      name: ' Error ',
-      nameColor: XTermColor.red,
+      icon: ElegantIcons.warningIcon,
+      name: ' Warning ',
+      nameColor: XTermColor.yellow,
+    ),
+    bool printLogToFile = true,
+    BorderBox borders = const BorderBox(),
+    int lineLength = 75,
+    LogEntryContent logEntryContent = const LogEntryContent(
+      divider: '|',
+      title: '',
+      labelTime: '',
+      time: '',
+      message: '',
+      source: '',
+      url: '',
+      linkText: '',
+    ),
+    LogEntryColor logEntryColor = const LogEntryColor(
+      dividerColor: XTermColor.yellow,
+      labelTimeColor: XTermColor.yellow,
+      timeColor: XTermColor.white,
+      labelTitleColor: XTermColor.yellow,
+      titleColor: XTermColor.white,
+      labelMessageColor: XTermColor.yellow,
+      messageColor: XTermColor.white,
+      sourceColor: XTermColor.white,
     ),
     LevelAlignment levelAlignment = LevelAlignment.left,
+    bool isDated = true,
+    bool isDashed = false,
+    bool forcePrint = false,
   }) {
     _box(
       logLevel: logLevel,
@@ -61,72 +135,16 @@ class ElegantLog {
     );
   }
 
-  static void warning({
-    LogLevel logLevel = const LogLevel(
-      icon: ElegantIcons.warningIcon,
-      name: ' Warning ',
-      nameColor: XTermColor.yellow,
-    ),
-    bool printLogToFile = true,
-    BorderBox borders = const BorderBox(),
-    int lineLength = 75,
-    LogEntryContent logEntryContent = const LogEntryContent(
-      divider: '|',
-      title: '',
-      labelTime: '',
-      time: '',
-      message: '',
-      source: '',
-      url: '',
-      linkText: '',
-    ),
-    LogEntryColor logEntryColor = const LogEntryColor(
-      timeColor: '',
-      sourceColor: XTermColor.white,
-      dividerColor: XTermColor.yellow,
-      titleColor: XTermColor.yellow,
-      labelTimeColor: XTermColor.yellow,
-      messageColor: XTermColor.white,
-    ),
-    LevelAlignment levelAlignment = LevelAlignment.left,
-    bool isDated = true,
-    bool isDashed = false,
-    bool forcePrint = false,
-  }) {
-    _box(
-      logLevel: logLevel,
-      levelAlignment: levelAlignment,
-      borders: borders,
-      dividerColor: logEntryColor.dividerColor,
-      divider: logEntryContent.divider,
-      titleColor: logEntryColor.titleColor,
-      title: logEntryContent.title,
-      labelTimeColor: logEntryColor.labelTimeColor,
-      labelTime: logEntryContent.labelTime,
-      timeColor: logEntryColor.timeColor,
-      time: logEntryContent.time,
-      messageColor: logEntryColor.messageColor,
-      message: logEntryContent.message,
-      sourceColor: logEntryColor.sourceColor,
-      source: logEntryContent.source,
-      lineLength: lineLength,
-      url: logEntryContent.url,
-      linkText: logEntryContent.linkText,
-      isDated: isDated,
-      isDashed: isDashed,
-      forcePrint: forcePrint,
-      printLogToFile: printLogToFile,
-    );
-  }
-
   static void info({
     BorderBox borders = const BorderBox(),
     bool printLogToFile = true,
     LogEntryColor logEntryColor = const LogEntryColor(
-      timeColor: '',
       dividerColor: XTermColor.blue,
-      titleColor: XTermColor.blue,
       labelTimeColor: XTermColor.blue,
+      timeColor: XTermColor.white,
+      labelTitleColor: XTermColor.blue,
+      titleColor: XTermColor.white,
+      labelMessageColor: XTermColor.blue,
       messageColor: XTermColor.white,
       sourceColor: XTermColor.white,
     ),
@@ -153,15 +171,20 @@ class ElegantLog {
   }) {
     _box(
       logLevel: logLevel,
+      levelAlignment: levelAlignment,
       borders: borders,
       dividerColor: logEntryColor.dividerColor,
       divider: logEntryContent.divider,
+      labelTitleColor: logEntryColor.labelTitleColor,
+      labelTitle: logEntryContent.labelTitle,
       titleColor: logEntryColor.titleColor,
       title: logEntryContent.title,
       labelTimeColor: logEntryColor.labelTimeColor,
       labelTime: logEntryContent.labelTime,
       timeColor: logEntryColor.timeColor,
       time: logEntryContent.time,
+      labelMessageColor: logEntryColor.labelMessageColor,
+      labelMessage: logEntryContent.labelMessage,
       messageColor: logEntryColor.messageColor,
       message: logEntryContent.message,
       sourceColor: logEntryColor.sourceColor,
@@ -190,10 +213,12 @@ class ElegantLog {
       linkText: '',
     ),
     LogEntryColor logEntryColor = const LogEntryColor(
-      timeColor: '',
       dividerColor: XTermColor.magenta,
-      titleColor: XTermColor.magenta,
       labelTimeColor: XTermColor.magenta,
+      timeColor: XTermColor.white,
+      labelTitleColor: XTermColor.magenta,
+      titleColor: XTermColor.white,
+      labelMessageColor: XTermColor.magenta,
       messageColor: XTermColor.white,
       sourceColor: XTermColor.white,
     ),
@@ -214,12 +239,16 @@ class ElegantLog {
       borders: borders,
       dividerColor: logEntryColor.dividerColor,
       divider: logEntryContent.divider,
+      labelTitleColor: logEntryColor.labelTitleColor,
+      labelTitle: logEntryContent.labelTitle,
       titleColor: logEntryColor.titleColor,
       title: logEntryContent.title,
       labelTimeColor: logEntryColor.labelTimeColor,
       labelTime: logEntryContent.labelTime,
       timeColor: logEntryColor.timeColor,
       time: logEntryContent.time,
+      labelMessageColor: logEntryColor.labelMessageColor,
+      labelMessage: logEntryContent.labelMessage,
       messageColor: logEntryColor.messageColor,
       message: logEntryContent.message,
       sourceColor: logEntryColor.sourceColor,
@@ -270,6 +299,7 @@ Future<void> _box({
   int lineLength = 75,
   String url = '',
   String linkText = '',
+  String traceMessage = '',
   bool isDated = true,
   bool isDashed = false,
   bool forcePrint = false,
@@ -302,15 +332,14 @@ Future<void> _box({
       _logPath = printLogFile(
           printLogToFile, _logPath, saveService, titleLog, divider);
     }
-    if (title.isNotEmpty && isDated) {
-      DrawFunctions.drawMedium(
-        borderColor: dividerColor,
-        boxMiddleRight: borders.boxMiddleRight,
-        boxMiddleLeft: borders.boxMiddleLeft,
-        lineLength: lineLength,
-        isDashed: isDashed,
-      );
-    }
+
+    DrawFunctions.drawMedium(
+      borderColor: dividerColor,
+      boxMiddleRight: borders.boxMiddleRight,
+      boxMiddleLeft: borders.boxMiddleLeft,
+      lineLength: lineLength,
+      isDashed: isDashed,
+    );
 
     if (isDated) {
       final titleLog = drawText(
@@ -327,15 +356,13 @@ Future<void> _box({
           printLogToFile, _logPath, saveService, titleLog, divider);
     }
 
-    if (isDated && source.isNotEmpty) {
-      DrawFunctions.drawMedium(
-        borderColor: dividerColor,
-        boxMiddleRight: borders.boxMiddleRight,
-        boxMiddleLeft: borders.boxMiddleRight,
-        lineLength: lineLength,
-        isDashed: isDashed,
-      );
-    }
+    DrawFunctions.drawMedium(
+      borderColor: dividerColor,
+      boxMiddleRight: borders.boxMiddleRight,
+      boxMiddleLeft: borders.boxMiddleLeft,
+      lineLength: lineLength,
+      isDashed: isDashed,
+    );
 
     if (source.isNotEmpty) {
       final messageLog = drawText(
@@ -344,10 +371,11 @@ Future<void> _box({
         labelColor: dividerColor,
         label: 'Source path:',
         messageColor: sourceColor,
-        message: XTermStyle.link(
-          linkText: sourceColor + source,
-          url: source,
-        ),
+        message: source,
+        // XTermStyle.link(
+        //   linkText: sourceColor + source,
+        //   url: source,
+        // ),
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
@@ -355,15 +383,13 @@ Future<void> _box({
           printLogToFile, _logPath, saveService, messageLog, divider);
     }
 
-    if (source.isNotEmpty && message.isNotEmpty) {
-      DrawFunctions.drawMedium(
-        borderColor: dividerColor,
-        boxMiddleRight: borders.boxMiddleRight,
-        boxMiddleLeft: borders.boxMiddleRight,
-        lineLength: lineLength,
-        isDashed: isDashed,
-      );
-    }
+    DrawFunctions.drawMedium(
+      borderColor: dividerColor,
+      boxMiddleRight: borders.boxMiddleRight,
+      boxMiddleLeft: borders.boxMiddleLeft,
+      lineLength: lineLength,
+      isDashed: isDashed,
+    );
 
     if (message.isNotEmpty) {
       final messageLog = drawText(
@@ -379,6 +405,13 @@ Future<void> _box({
       _logPath = printLogFile(
           printLogToFile, _logPath, saveService, messageLog, divider);
     }
+    DrawFunctions.drawMedium(
+      borderColor: dividerColor,
+      boxMiddleRight: borders.boxMiddleRight,
+      boxMiddleLeft: borders.boxMiddleLeft,
+      lineLength: lineLength,
+      isDashed: isDashed,
+    );
 
     if (url.isNotEmpty) {
       final linkMessage = XTermStyle.link(url: url, linkText: linkText);
@@ -390,6 +423,31 @@ Future<void> _box({
         label: 'Link:',
         messageColor: messageColor,
         message: linkMessage,
+        maxCharsPerLine: lineLength,
+        printLogToFile: printLogToFile,
+      );
+      _logPath = printLogFile(printLogToFile, _logPath, saveService,
+          'Link: $linkText - $url', divider);
+    }
+
+    DrawFunctions.drawMedium(
+      borderColor: dividerColor,
+      boxMiddleRight: borders.boxMiddleRight,
+      boxMiddleLeft: borders.boxMiddleLeft,
+      lineLength: lineLength,
+      isDashed: isDashed,
+    );
+
+    if (url.isNotEmpty) {
+      final linkMessage = XTermStyle.link(url: url, linkText: linkText);
+
+      drawText(
+        dividerColor: dividerColor,
+        divider: divider,
+        labelColor: dividerColor,
+        label: 'StackTrace:',
+        messageColor: messageColor,
+        message: traceMessage,
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
@@ -442,13 +500,13 @@ String drawText({
   do {
     final (b, logLine) = fillText(
       lastIndex: lastUsedWord,
-      dividerColor: XTermColor.red,
+      dividerColor: dividerColor,
       divider: divider,
-      labelColor: XTermColor.cyan,
+      labelColor: labelColor,
       labelWords: labelWords,
-      messageColor: XTermColor.white,
+      messageColor: messageColor,
       messageWords: messageWords,
-      maxCharsPerLine: maxCharsPerLine,
+      maxCharsPerLine: maxCharsPerLine - 3,
     );
 
     if (b.isNotEmpty) {
@@ -514,7 +572,7 @@ String drawText({
 
     // Adiciona o padding à direita para completar a linha
     // Adicionando o +1 pro calculo bater com o maxCharsPerLine, pois a linha tava ficando com tamanho igual ao maxCharsPerLine + 1
-    //TODO: Verificar se o removeEscapes presta
+
     final charsWithSpaces = removeEscapedANSI(content.join(' ')).length;
     int padRight = maxCharsPerLine - (charsWithSpaces + divSpace);
 
@@ -530,7 +588,6 @@ String drawText({
       line = line.padRight(maxCharsPerLine - 1) + divider;
     }
 
-    // TODO: Line Colored Printer
     // Gerar linha colorida
     final coloredLine = _lineGenerator(
       labelColor: labelColor,
@@ -542,7 +599,7 @@ String drawText({
       content: content,
     );
 
-    print(coloredLine);
+    debugPrint(coloredLine);
 
     return (content, line);
   } else {

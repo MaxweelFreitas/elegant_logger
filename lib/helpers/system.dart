@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
-import 'x_term/x_term_color.dart';
-
 class System {
   static String getFileName(StackTrace stackTrace) {
     final resultLinks = System.getStackTraceLinks(stackTrace);
     if (kDebugMode) {
-      return '📂 ${XTermColor.green}File name: 📄 ${XTermColor.blue}${resultLinks[0].split('/').last.split(':').first}';
+      return resultLinks[0];
     }
     {
       return '';
