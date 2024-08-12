@@ -23,6 +23,7 @@ class ElegantLog {
     bool isDated = true,
     bool isDashed = false,
     bool forcePrint = false,
+    bool printLogToFile = true,
     TagType tag = const TagType(
       icon: ElegantIcons.errorIcon,
       name: ' Error ',
@@ -56,6 +57,7 @@ class ElegantLog {
       isDated: isDated,
       isDashed: isDashed,
       forcePrint: forcePrint,
+      printLogToFile: printLogToFile,
     );
   }
 
@@ -65,6 +67,7 @@ class ElegantLog {
       name: ' Warning ',
       nameColor: XTermColor.yellow,
     ),
+    bool printLogToFile = true,
     BorderBox borders = const BorderBox(),
     int lineLength = 75,
     LogEntryContent logEntryContent = const LogEntryContent(
@@ -112,11 +115,13 @@ class ElegantLog {
       isDated: isDated,
       isDashed: isDashed,
       forcePrint: forcePrint,
+      printLogToFile: printLogToFile,
     );
   }
 
   static void info({
     BorderBox borders = const BorderBox(),
+    bool printLogToFile = true,
     LogEntryColor logEntryColor = const LogEntryColor(
       timeColor: '',
       dividerColor: XTermColor.blue,
@@ -168,11 +173,13 @@ class ElegantLog {
       isDated: isDated,
       isDashed: isDashed,
       forcePrint: forcePrint,
+      printLogToFile: printLogToFile,
     );
   }
 
   static void debug({
     BorderBox borders = const BorderBox(),
+    bool printLogToFile = true,
     LogEntryContent logEntryContent = const LogEntryContent(
       divider: '|',
       title: '',
@@ -224,6 +231,7 @@ class ElegantLog {
       isDated: isDated,
       isDashed: isDashed,
       forcePrint: forcePrint,
+      printLogToFile: printLogToFile,
     );
   }
 }
@@ -267,6 +275,7 @@ void _box({
   bool isDated = true,
   bool isDashed = false,
   bool forcePrint = false,
+  bool printLogToFile = true,
 }) {
   if (kDebugMode || forcePrint) {
     DrawFunctions.drawTop(
@@ -290,6 +299,7 @@ void _box({
         messageColor: titleColor,
         message: title,
         maxCharsPerLine: lineLength,
+        printLogToFile: printLogToFile,
       );
     }
     if (title.isNotEmpty && isDated) {
@@ -310,6 +320,7 @@ void _box({
         label: labelTime.isEmpty ? 'Log Time:' : labelTime,
         messageColor: timeColor,
         message: time.isEmpty ? _showDateTime(DateTime.now()) : time,
+        printLogToFile: printLogToFile,
         maxCharsPerLine: lineLength,
       );
     }
@@ -336,6 +347,7 @@ void _box({
           url: source,
         ),
         maxCharsPerLine: lineLength,
+        printLogToFile: printLogToFile,
       );
     }
 
@@ -358,6 +370,7 @@ void _box({
         messageColor: messageColor,
         message: message,
         maxCharsPerLine: lineLength,
+        printLogToFile: printLogToFile,
       );
     }
 
@@ -372,6 +385,7 @@ void _box({
         messageColor: messageColor,
         message: linkMessage,
         maxCharsPerLine: lineLength,
+        printLogToFile: printLogToFile,
       );
     }
 
