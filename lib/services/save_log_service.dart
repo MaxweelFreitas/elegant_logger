@@ -24,7 +24,7 @@ class TxtSaveLogService implements SaveLogService {
           directoryLog.createSync();
         }
 
-        final timeStamp = DateTime.now().toIso8601String();
+        final timeStamp = DateTime.now().toIso8601String().replaceAll(':', '-');
 
         path = Platform.isWindows
             ? '${directoryLog.path}\\logs_$timeStamp.txt'
@@ -60,7 +60,7 @@ class JsonSaveLogService implements SaveLogService {
           directoryLog.createSync();
         }
 
-        final timeStamp = DateTime.now().toIso8601String();
+        final timeStamp = DateTime.now().toIso8601String().replaceAll(':', '-');
 
         path = Platform.isWindows
             ? '${directoryLog.path}\\logs_$timeStamp.json'
