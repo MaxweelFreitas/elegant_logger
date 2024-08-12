@@ -384,7 +384,7 @@ Future<void> _box({
     if (url.isNotEmpty) {
       final linkMessage = XTermStyle.link(url: url, linkText: linkText);
 
-      final messageLog = drawText(
+      drawText(
         dividerColor: dividerColor,
         divider: divider,
         labelColor: dividerColor,
@@ -394,7 +394,7 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(printLogToFile, _logPath, saveService, messageLog, divider);
+      _logPath = printLogFile(printLogToFile, _logPath, saveService, 'Link: $linkText - $url', divider);
     }
 
     DrawFunctions.drawBottom(
