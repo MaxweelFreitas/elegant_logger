@@ -248,7 +248,7 @@ String _showDateTime(DateTime dateTime) {
   return '$year-$month-$day $hour:$minute:$second';
 }
 
-void _box({
+Future<void> _box({
   String emoji = '',
   BorderBox borders = const BorderBox(),
   String dividerColor = '',
@@ -276,7 +276,10 @@ void _box({
   bool isDashed = false,
   bool forcePrint = false,
   bool printLogToFile = true,
-}) {
+}) async {
+  String _logPath = '';
+  final SaveLogService saveService = JsonSaveLogService();
+  // final SaveLogService saveService = TxtSaveLogService();
   if (kDebugMode || forcePrint) {
     DrawFunctions.drawTop(
       emoji: emoji,
@@ -291,7 +294,7 @@ void _box({
     );
 
     if (title.isNotEmpty) {
-      drawText(
+      final titleLog = drawText(
         dividerColor: dividerColor,
         divider: divider,
         labelColor: labelTitleColor,
@@ -301,6 +304,7 @@ void _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
+      _logPath = printLogFile(printLogToFile, _logPath, saveService, titleLog, divider);
     }
     if (title.isNotEmpty && isDated) {
       DrawFunctions.drawMedium(
@@ -313,7 +317,7 @@ void _box({
     }
 
     if (isDated) {
-      drawText(
+      final titleLog = drawText(
         dividerColor: dividerColor,
         divider: divider,
         labelColor: labelTimeColor,
@@ -323,6 +327,7 @@ void _box({
         printLogToFile: printLogToFile,
         maxCharsPerLine: lineLength,
       );
+      _logPath = printLogFile(printLogToFile, _logPath, saveService, titleLog, divider);
     }
 
     if (isDated && source.isNotEmpty) {
@@ -336,7 +341,7 @@ void _box({
     }
 
     if (source.isNotEmpty) {
-      drawText(
+      final messageLog = drawText(
         dividerColor: dividerColor,
         divider: divider,
         labelColor: dividerColor,
@@ -349,6 +354,7 @@ void _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
+      _logPath = printLogFile(printLogToFile, _logPath, saveService, messageLog, divider);
     }
 
     if (source.isNotEmpty && message.isNotEmpty) {
@@ -362,7 +368,7 @@ void _box({
     }
 
     if (message.isNotEmpty) {
-      drawText(
+      final messageLog = drawText(
         dividerColor: dividerColor,
         divider: divider,
         labelColor: dividerColor,
@@ -372,12 +378,13 @@ void _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
+      _logPath = printLogFile(printLogToFile, _logPath, saveService, messageLog, divider);
     }
 
     if (url.isNotEmpty) {
       final linkMessage = XTermStyle.link(url: url, linkText: linkText);
 
-      drawText(
+      final messageLog = drawText(
         dividerColor: dividerColor,
         divider: divider,
         labelColor: dividerColor,
@@ -387,6 +394,7 @@ void _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
+      _logPath = printLogFile(printLogToFile, _logPath, saveService, messageLog, divider);
     }
 
     DrawFunctions.drawBottom(
@@ -396,33 +404,43 @@ void _box({
       lineLength: lineLength,
     );
   }
+  if (printLogToFile) {
+    debugPrint('View logFile in $_logPath');
+  }
 }
 
-Future<String> drawText({
+String printLogFile(bool printLogToFile, String _logPath, SaveLogService saveService, String titleLog, String divider) {
+  if (printLogToFile) {
+    // _logPath = await saveService.saveLog(titleLog, filePath: _logPath);
+    return saveService.saveLog(removeEscapedANSI(titleLog).replaceAll(divider, '').trim(), filePath: _logPath);
+  }
+  return '';
+}
+
+String drawText({
   String label = '',
   String message = '',
-  String divider = '',
+  String divider = '|',
   String dividerColor = '',
   String labelColor = '',
   String messageColor = '',
   int maxCharsPerLine = 60,
   bool printLogToFile = true,
-}) async {
+}) {
   List<List<String>> corpus = [];
   List<String> labelWords = label.split(' ');
   List<String> messageWords = message.split(' ');
-  String _logPath = '';
+  List<String> lineList = [];
 
   int lastUsedWord = 0;
 
   final setOfWords = labelWords + messageWords;
 
-  final SaveLogService saveService = TxtSaveLogService();
-
   do {
     final (b, logLine) = fillText(
       lastIndex: lastUsedWord,
       dividerColor: XTermColor.red,
+      divider: divider,
       labelColor: XTermColor.cyan,
       labelWords: labelWords,
       messageColor: XTermColor.white,
@@ -436,21 +454,15 @@ Future<String> drawText({
         b.removeAt(b.length - 1);
       }
       lastUsedWord += b.length;
-      if (printLogToFile) {
-        _logPath = await saveService.saveLog(logLine, filePath: _logPath);
-      }
+      lineList.add(logLine.replaceAll(divider, '').trim());
     } else {
       break;
     }
   } while (setOfWords.length > lastUsedWord);
 
-  if (printLogToFile) {
-    debugPrint('View logFile in $_logPath');
-  }
-
   // print(corpus);
 
-  return '';
+  return lineList.join(' ');
 }
 
 (List<String>, String) fillText({
