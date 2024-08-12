@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:poc_ml/dtos/border_box.dart';
+import 'package:poc_ml/dtos/log_level.dart';
 import 'package:poc_ml/helpers/elegant_icons.dart';
 import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 import 'package:poc_ml/helpers/x_term/x_term_style.dart';
 
 import 'dtos/log_entry_color.dart';
 import 'dtos/log_entry_content.dart';
-import 'dtos/tag_type.dart';
 import 'helpers/converter.dart';
 import 'helpers/draw_functions.dart';
 import 'services/save_log_service.dart';
@@ -24,16 +24,16 @@ class ElegantLog {
     bool isDashed = false,
     bool forcePrint = false,
     bool printLogToFile = true,
-    TagType tag = const TagType(
+    LogLevel logLevel = const LogLevel(
       icon: ElegantIcons.errorIcon,
       name: ' Error ',
       nameColor: XTermColor.red,
     ),
+    LevelAlignment levelAlignment = LevelAlignment.left,
   }) {
     _box(
-      emoji: tag.icon,
-      logTypeColor: tag.nameColor,
-      logType: tag.name,
+      logLevel: logLevel,
+      levelAlignment: levelAlignment,
       borders: borders,
       dividerColor: logEntryColor.dividerColor,
       divider: logEntryContent.divider,
@@ -62,7 +62,7 @@ class ElegantLog {
   }
 
   static void warning({
-    TagType tag = const TagType(
+    LogLevel logLevel = const LogLevel(
       icon: ElegantIcons.warningIcon,
       name: ' Warning ',
       nameColor: XTermColor.yellow,
@@ -88,14 +88,14 @@ class ElegantLog {
       labelTimeColor: XTermColor.yellow,
       messageColor: XTermColor.white,
     ),
+    LevelAlignment levelAlignment = LevelAlignment.left,
     bool isDated = true,
     bool isDashed = false,
     bool forcePrint = false,
   }) {
     _box(
-      emoji: tag.icon,
-      logTypeColor: tag.nameColor,
-      logType: tag.name,
+      logLevel: logLevel,
+      levelAlignment: levelAlignment,
       borders: borders,
       dividerColor: logEntryColor.dividerColor,
       divider: logEntryContent.divider,
@@ -140,20 +140,19 @@ class ElegantLog {
       linkText: '',
       url: '',
     ),
-    TagType tag = const TagType(
+    LogLevel logLevel = const LogLevel(
       icon: ElegantIcons.infoIcon,
-      name: ' Info ',
+      name: 'Info ',
       nameColor: XTermColor.blue,
     ),
+    LevelAlignment levelAlignment = LevelAlignment.left,
     int lineLength = 75,
     bool isDated = true,
     bool isDashed = false,
     bool forcePrint = false,
   }) {
     _box(
-      emoji: tag.icon,
-      logTypeColor: tag.nameColor,
-      logType: tag.name,
+      logLevel: logLevel,
       borders: borders,
       dividerColor: logEntryColor.dividerColor,
       divider: logEntryContent.divider,
@@ -198,20 +197,20 @@ class ElegantLog {
       messageColor: XTermColor.white,
       sourceColor: XTermColor.white,
     ),
-    TagType tag = const TagType(
+    LogLevel logLevel = const LogLevel(
       icon: ElegantIcons.debugIcon,
       name: ' Debug ',
       nameColor: XTermColor.magenta,
     ),
+    LevelAlignment levelAlignment = LevelAlignment.left,
     int lineLength = 75,
     bool isDated = true,
     bool isDashed = false,
     bool forcePrint = false,
   }) {
     _box(
-      emoji: tag.icon,
-      logTypeColor: tag.nameColor,
-      logType: tag.name,
+      logLevel: logLevel,
+      levelAlignment: levelAlignment,
       borders: borders,
       dividerColor: logEntryColor.dividerColor,
       divider: logEntryContent.divider,
@@ -249,12 +248,11 @@ String _showDateTime(DateTime dateTime) {
 }
 
 Future<void> _box({
-  String emoji = '',
   BorderBox borders = const BorderBox(),
+  LogLevel logLevel = const LogLevel(),
+  LevelAlignment levelAlignment = LevelAlignment.middle,
   String dividerColor = '',
   String divider = '',
-  String logTypeColor = '',
-  String logType = '',
   String labelTitleColor = '',
   String labelTitle = '',
   String titleColor = '',
@@ -282,14 +280,11 @@ Future<void> _box({
   // final SaveLogService saveService = TxtSaveLogService();
   if (kDebugMode || forcePrint) {
     DrawFunctions.drawTop(
-      emoji: emoji,
+      levelAlignment: levelAlignment,
+      logLevel: logLevel,
       borderColor: dividerColor,
       boxTopLeftBorder: borders.boxTopLeftBorder,
       boxTopRightBorder: borders.boxTopRightBorder,
-      boxMiddleRight: borders.boxMiddleRight,
-      boxMiddleLeft: borders.boxMiddleLeft,
-      logTypeColor: logTypeColor,
-      logType: logType,
       lineLength: lineLength,
     );
 
@@ -304,7 +299,8 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(printLogToFile, _logPath, saveService, titleLog, divider);
+      _logPath = printLogFile(
+          printLogToFile, _logPath, saveService, titleLog, divider);
     }
     if (title.isNotEmpty && isDated) {
       DrawFunctions.drawMedium(
@@ -327,7 +323,8 @@ Future<void> _box({
         printLogToFile: printLogToFile,
         maxCharsPerLine: lineLength,
       );
-      _logPath = printLogFile(printLogToFile, _logPath, saveService, titleLog, divider);
+      _logPath = printLogFile(
+          printLogToFile, _logPath, saveService, titleLog, divider);
     }
 
     if (isDated && source.isNotEmpty) {
@@ -354,7 +351,8 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(printLogToFile, _logPath, saveService, messageLog, divider);
+      _logPath = printLogFile(
+          printLogToFile, _logPath, saveService, messageLog, divider);
     }
 
     if (source.isNotEmpty && message.isNotEmpty) {
@@ -378,7 +376,8 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(printLogToFile, _logPath, saveService, messageLog, divider);
+      _logPath = printLogFile(
+          printLogToFile, _logPath, saveService, messageLog, divider);
     }
 
     if (url.isNotEmpty) {
@@ -394,7 +393,8 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(printLogToFile, _logPath, saveService, 'Link: $linkText - $url', divider);
+      _logPath = printLogFile(printLogToFile, _logPath, saveService,
+          'Link: $linkText - $url', divider);
     }
 
     DrawFunctions.drawBottom(
@@ -409,10 +409,13 @@ Future<void> _box({
   }
 }
 
-String printLogFile(bool printLogToFile, String _logPath, SaveLogService saveService, String titleLog, String divider) {
+String printLogFile(bool printLogToFile, String _logPath,
+    SaveLogService saveService, String titleLog, String divider) {
   if (printLogToFile) {
     // _logPath = await saveService.saveLog(titleLog, filePath: _logPath);
-    return saveService.saveLog(removeEscapedANSI(titleLog).replaceAll(divider, '').trim(), filePath: _logPath);
+    return saveService.saveLog(
+        removeEscapedANSI(titleLog).replaceAll(divider, '').trim(),
+        filePath: _logPath);
   }
   return '';
 }

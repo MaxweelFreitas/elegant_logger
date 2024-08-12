@@ -13,10 +13,10 @@ import '../helpers/elegant_box.dart';
 /// ┤        ⇒ is the prefix
 /// ⎕       ⇒ is the icon
 /// ◻◻◻◻◻ ⇒ is the name
-/// ├        ⇒ is the prefix
+/// ├        ⇒ is the sufix
 ///
 /// and they can all be replaced
-class TagType {
+class LogLevel {
   final String prefix;
   final String icon;
   final String nameBgColor;
@@ -24,12 +24,12 @@ class TagType {
   final String name;
   final String sufix;
 
-  const TagType({
+  const LogLevel({
     this.prefix = ElegantBox.middleRight,
-    this.icon = ElegantBox.noEmoji,
+    this.icon = '',
     this.nameBgColor = XTermColor.reset,
     this.nameColor = XTermColor.white,
-    this.name = 'TAG',
+    this.name = '',
     this.sufix = ElegantBox.middleLeft,
   });
 }

@@ -1,37 +1,75 @@
 import 'dart:developer';
 
+import 'package:poc_ml/dtos/log_level.dart';
+
 import 'elegant_box.dart';
 import 'x_term/x_term_color.dart';
 import 'x_term/x_term_style.dart';
 
+enum LevelAlignment { left, middle, right }
+
 class DrawFunctions {
-  static void drawTop({
-    String emoji = '',
+  static String drawTop({
     String borderColor = XTermColor.white,
-    String boxTopLeftBorder = ElegantBox.topLeft,
-    String boxTopRightBorder = ElegantBox.topRight,
-    String logTypeColor = '',
-    String logType = '',
-    String boxMiddleRight = ElegantBox.middleRight,
-    String boxMiddleLeft = ElegantBox.middleLeft,
+    String boxTopLeftBorder = ElegantBox.topLeftArc,
+    String boxTopRightBorder = ElegantBox.topRightArc,
+    LogLevel logLevel = const LogLevel(),
+    LevelAlignment levelAlignment = LevelAlignment.middle,
     int lineLength = 75,
   }) {
-    if (logType.isEmpty) {
-      log(
-        '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: lineLength)}$boxTopRightBorder${XTermStyle.reset}',
-      );
-    } else if (emoji.isNotEmpty && logType.isNotEmpty) {
-    } else if (emoji.isNotEmpty) {
-      final tag = '$boxMiddleRight$logTypeColor$emoji$logType$borderColor$boxMiddleLeft';
-      //calcular espaço caso venha apenas o icone
-      final lenWithIcon = lineLength - emoji.length;
-      //calcular o espaçõ caso venha um logType
-    } else if (logType.isNotEmpty) {}
-    //TypedTop ⇒ ╭┤⎕ ⏾⏾⏾⏾⏾ ├───────────────────────────────────────────────────────────────╮
-    //UnTyped  ⇒ ╭──────────────────────────────────────────────────────────────────────────╮
+    final llRounded = lineLength % 2 == 0 ? 3 : 2;
+    final icon = logLevel.icon.isNotEmpty ? '${logLevel.icon} ' : '';
+    final name = logLevel.name.isNotEmpty ? '${logLevel.name} ' : '';
+    final content =
+        '$borderColor${logLevel.prefix}${logLevel.nameBgColor}${logLevel.nameColor} $icon$name${XTermStyle.reset}$borderColor${logLevel.sufix}';
+    final hdivLen = lineLength -
+        boxTopLeftBorder.length +
+        boxTopRightBorder.length -
+        icon.length -
+        name.length -
+        llRounded -
+        1;
+    if (logLevel.icon.isNotEmpty && logLevel.name.isEmpty) {
+      //Draw icon
+      final String result = switch (levelAlignment) {
+        //TypedTop ⇒ ╭┤ ⎕ ├──────────────────────────────────────────────────────╮
+        LevelAlignment.left =>
+          '$borderColor$boxTopLeftBorder$content${horizontalDivider(lineLength: hdivLen)}$boxTopRightBorder${XTermStyle.reset}',
+        //TypedTop ⇒ ╭──────────────────────────────────────────────────────┤ ⎕ ├╮
+        LevelAlignment.right =>
+          '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: hdivLen)}$content$boxTopRightBorder${XTermStyle.reset}',
+        //TypedTop ⇒ ╭──────────────────────┤ ⎕ ├────────────────────────────────╮
+        LevelAlignment.middle =>
+          '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: hdivLen ~/ 2 + 1)}$content$borderColor${horizontalDivider(lineLength: hdivLen ~/ 2 + 2)}$boxTopRightBorder${XTermStyle.reset}',
+      };
+      log(result);
+      return result;
+    } else if (logLevel.icon.isNotEmpty && logLevel.name.isNotEmpty) {
+      //Draw both
+      final String result = switch (levelAlignment) {
+        //TypedTop ⇒ ╭┤ ⎕ ◻◻◻◻◻ ├──────────────────────────────────────────────╮
+        LevelAlignment.left =>
+          '$borderColor$boxTopLeftBorder$content${horizontalDivider(lineLength: hdivLen)}$boxTopRightBorder${XTermStyle.reset}',
+        //TypedTop ⇒ ╭──────────────────────────────────────────────┤ ⎕ ◻◻◻◻◻ ├╮
+        LevelAlignment.right =>
+          '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: hdivLen)}$content$boxTopRightBorder${XTermStyle.reset}',
+        //TypedTop ⇒ ╭──────────────────────┤ ⎕ ◻◻◻◻◻ ├────────────────────────╮
+        LevelAlignment.middle =>
+          '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: hdivLen ~/ 2 + 1)}$content$borderColor${horizontalDivider(lineLength: hdivLen ~/ 2 + 2)}$boxTopRightBorder${XTermStyle.reset}',
+      };
+      log(result);
+      return result;
+    } else {
+      //TypedTop ⇒ ╭────────────────────────────────────────────────────────────╮
+      final result =
+          '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: lineLength)}$boxTopRightBorder${XTermStyle.reset}';
+      log(result);
+      return result;
+    }
   }
 
-  static String horizontalDivider({int lineLength = 75, bool isDashed = false}) {
+  static String horizontalDivider(
+      {int lineLength = 75, bool isDashed = false}) {
     late final String lineType;
     if (!isDashed) {
       lineType = ElegantBox.line;
@@ -41,7 +79,7 @@ class DrawFunctions {
     return List.filled(lineLength - 2, lineType).join();
   }
 
-  static void drawMedium({
+  static String drawMedium({
     String borderColor = XTermColor.white,
     String boxMiddleRight = ElegantBox.middleRight,
     String boxMiddleLeft = ElegantBox.middleLeft,
@@ -52,24 +90,23 @@ class DrawFunctions {
     //Dashed ⇒ ├╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶╶┤
     //Lined  ⇒ ├──────────────────────────────────────────────────────────────────────────┤
 
-    log(
-      '$borderColor$boxMiddleLeft${horizontalDivider(lineLength: lineLength, isDashed: isDashed)}$boxMiddleRight${XTermStyle.reset}',
-    );
+    final result =
+        '$borderColor$boxMiddleLeft${horizontalDivider(lineLength: lineLength, isDashed: isDashed)}$boxMiddleRight${XTermStyle.reset}';
+    log(result);
+    return result;
   }
 
-  static void drawBottom({
+  static String drawBottom({
     String borderColor = XTermColor.white,
-    String boxBottomLeftBorder = ElegantBox.bottomLeft,
-    String boxBottomRightBorder = ElegantBox.bottomRight,
+    String boxBottomLeftBorder = ElegantBox.bottomLeftArc,
+    String boxBottomRightBorder = ElegantBox.bottomRightArc,
     int lineLength = 75,
   }) {
     //Example
     //Lined  ⇒ ╰──────────────────────────────────────────────────────────────────────────╯
-
-    log(
-      '$borderColor$boxBottomLeftBorder${horizontalDivider(lineLength: lineLength)}$boxBottomRightBorder${XTermStyle.reset}',
-    );
+    final result =
+        '$borderColor$boxBottomLeftBorder${horizontalDivider(lineLength: lineLength)}$boxBottomRightBorder${XTermStyle.reset}';
+    log(result);
+    return result;
   }
-
-  
 }

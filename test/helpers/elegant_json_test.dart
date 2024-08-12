@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:poc_ml/helpers/elegant_json.dart';
+import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 
 void main() {
   test('elegant json ...', () async {
@@ -26,10 +27,10 @@ void main() {
     final result = ElegantJson.print(
       jsonString: exampleJsonString,
       lineLength: 50,
-      // dividerColor: XTermColor.red,
-      // bracketColor: XTermColor.white,
-      // keyColor: XTermColor.green,
-      // valueColor: XTermColor.magenta,
+      dividerColor: XTermColor.red,
+      bracketColor: XTermColor.white,
+      keyColor: XTermColor.green,
+      valueColor: XTermColor.magenta,
     );
 
     print(result);
