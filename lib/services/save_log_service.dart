@@ -17,7 +17,8 @@ class TxtSaveLogService implements SaveLogService {
         // Obtém o diretório de documentos
         final directoryRootPath = Directory.current.path;
 
-        final directoryLog = Directory('$directoryRootPath/logs');
+        var pathRoot = Platform.isWindows ? '$directoryRootPath\\logs' : '$directoryRootPath/logs';
+        final directoryLog = Directory(pathRoot);
 
         if (!directoryLog.existsSync()) {
           directoryLog.createSync();
@@ -25,7 +26,9 @@ class TxtSaveLogService implements SaveLogService {
 
         final timeStamp = DateTime.now().toIso8601String();
 
-        path = '${directoryLog.path}/logs_$timeStamp.txt';
+        path = Platform.isWindows
+            ? '${directoryLog.path}\\logs_$timeStamp.txt'
+            : '${directoryLog.path}/logs_$timeStamp.txt';
       }
       // Cria uma referência ao arquivo de log
       final file = File(path);
@@ -50,7 +53,8 @@ class JsonSaveLogService implements SaveLogService {
       if (filePath.isEmpty) {
         final directoryRootPath = Directory.current.path;
 
-        final directoryLog = Directory('$directoryRootPath/logs');
+        var pathRoot = Platform.isWindows ? '$directoryRootPath\\logs' : '$directoryRootPath/logs';
+        final directoryLog = Directory(pathRoot);
 
         if (!directoryLog.existsSync()) {
           directoryLog.createSync();
@@ -58,7 +62,9 @@ class JsonSaveLogService implements SaveLogService {
 
         final timeStamp = DateTime.now().toIso8601String();
 
-        path = '${directoryLog.path}/logs_$timeStamp.json';
+        path = Platform.isWindows
+            ? '${directoryLog.path}\\logs_$timeStamp.json'
+            : '${directoryLog.path}/logs_$timeStamp.json';
       }
 
       final file = File(path);
