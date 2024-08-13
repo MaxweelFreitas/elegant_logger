@@ -1,6 +1,6 @@
 import '../helpers/x_term/x_term_color.dart';
 
-class LogEntryColor {
+final class LogEntryColor {
   final String dividerColor;
   final String labelTitleColor;
   final String titleColor;

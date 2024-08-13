@@ -2,7 +2,7 @@ import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 
 import '../helpers/elegant_box.dart';
 
-/// Default [tag] printed.
+/// ## Default [LogLevel] printed.
 ///
 /// Output looks like this:
 /// ```dart
@@ -16,7 +16,7 @@ import '../helpers/elegant_box.dart';
 /// ├        ⇒ is the sufix
 ///
 /// and they can all be replaced
-class LogLevel {
+final class LogLevel {
   final String prefix;
   final String icon;
   final String nameBgColor;

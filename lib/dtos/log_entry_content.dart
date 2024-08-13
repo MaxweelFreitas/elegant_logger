@@ -1,4 +1,4 @@
-class LogEntryContent {
+final class LogEntryContent {
   final String divider;
   final String labelTitle;
   final String title;

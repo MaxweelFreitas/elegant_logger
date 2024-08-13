@@ -1,6 +1,6 @@
 import '../helpers/elegant_box.dart';
 
-class BorderBox {
+final class BorderBox {
   final String boxTopLeftBorder;
   final String boxTopRightBorder;
   final String boxMiddleRight;
