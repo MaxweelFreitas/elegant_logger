@@ -3,12 +3,12 @@ import 'dart:convert';
 class ElegantJson {
   static String print({
     required String jsonString,
+    required int lineLength,
     String divider = '|',
     String dividerColor = '\x1B[37m',
     String bracketColor = '\x1b[37m', // ANSI color code for blue
     String keyColor = '\x1b[37m', // ANSI color code for yellow
     String valueColor = '\x1b[37m', // ANSI color code for green
-    required int lineLength,
   }) {
     try {
       // Parse the JSON string into a Map
