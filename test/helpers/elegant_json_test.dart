@@ -9,18 +9,18 @@ void main() {
   test('elegant json ...', () async {
     String exampleJsonString = jsonEncode(
       {
-        "user": {
-          "id": 12345,
-          "name": "Alice Johnson",
-          "email": "alice.johnson@example.com",
-          "address": {
-            "street": "123 Elm Street",
-            "number": "24B",
-            "city": "Metropolis",
-            "zipcode": "12345"
+        'user': {
+          'id': 12345,
+          'name': 'Alice Johnson',
+          'email': 'alice.johnson@example.com',
+          'address': {
+            'street': '123 Elm Street',
+            'number': '24B',
+            'city': 'Metropolis',
+            'zipcode': '12345'
           },
-          "active": true,
-          "roles": ["admin", "user"]
+          'active': true,
+          'roles': ['admin', 'user']
         }
       },
     );

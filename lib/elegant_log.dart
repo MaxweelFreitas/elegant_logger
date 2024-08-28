@@ -629,19 +629,19 @@ String _lineGenerator({
 }) {
   final result = StringBuffer();
   if (content.isNotEmpty) {
-    result.write("$dividerColor$divider ");
+    result.write('$dividerColor$divider ');
 
     for (var word in content) {
       if (labelWords.contains(word)) {
-        result.write("$labelColor$word ");
+        result.write('$labelColor$word ');
       } else if (messageWords.contains(word)) {
-        result.write("$messageColor$word ");
+        result.write('$messageColor$word ');
       } else {
         result.write('$word ');
       }
     }
 
-    result.write("$dividerColor$divider$reset");
+    result.write('$dividerColor$divider$reset');
   }
   var string = result.toString();
   if (string.startsWith(r'[31m| [36mLink: ]8;;')) {

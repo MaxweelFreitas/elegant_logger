@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poc_ml/n_z_log.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,9 +15,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: () {
-              NZLog.error(msg: 'Olá');
-            },
+            onTap: () {},
             child: Container(
               height: 50,
               width: double.infinity,

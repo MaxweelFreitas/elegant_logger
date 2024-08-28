@@ -33,11 +33,6 @@ class NZLog {
   static const line = '─';
   static const dashed = '╶';
 
-// ┌─┬┐  ╔═╦╗
-// │ ││  ║ ║║
-// ├─┼┤  ╠═╬╣
-// └─┴┘
-
   static void error({
     String emoji = errorIcon,
     String title = '',
@@ -169,7 +164,7 @@ String _showDateTime(DateTime dateTime) {
   return '$year-$month-$day $hour:$minute:$second';
 }
 
-_box({
+void _box({
   String logType = '',
   String title = '',
   String msg = '',
@@ -235,7 +230,7 @@ _box({
   }
 }
 
-_drawTop({
+void _drawTop({
   String logType = '',
   String color = '\x1B[37m',
   int lineLength = 75,
@@ -250,7 +245,7 @@ _drawTop({
   );
 }
 
-_drawTitle({
+void _drawTitle({
   String msg = '',
   String color = '\x1B[37m',
   int lineLength = 75,
@@ -271,7 +266,7 @@ _drawTitle({
   }
 }
 
-_drawText({
+void _drawText({
   String prefix = '',
   String msg = '',
   String color = '\x1B[37m',
@@ -304,7 +299,7 @@ _drawText({
   );
 }
 
-_drawMedium({
+void _drawMedium({
   String color = '\x1B[37m',
   int lineLength = 75,
   bool isDashed = false,
@@ -314,7 +309,7 @@ _drawMedium({
   );
 }
 
-_drawBottom({
+void _drawBottom({
   String color = '\x1B[37m',
   int lineLength = 75,
 }) {
@@ -339,7 +334,7 @@ String formatMessageWithColorsLn({
   StringBuffer result = StringBuffer();
 
   // Adiciona a primeira linha com a label
-  String firstLine = "$dividerColor$divider $labelColor$label $messageColor";
+  String firstLine = '$dividerColor$divider $labelColor$label $messageColor';
   int firstLineLength = firstLine.length -
       dividerColor.length -
       labelColor.length -
@@ -348,7 +343,7 @@ String formatMessageWithColorsLn({
   if (firstLineLength > maxCharsPerLine) {
     // Divide a label em palavras para tratar a quebra de linha
     List<String> labelWords = label.split(' ');
-    String currentLabelLine = "$dividerColor$divider $labelColor";
+    String currentLabelLine = '$dividerColor$divider $labelColor';
     int currentLabelLineLength =
         divider.length + 1; // considerando o divider e o espaço após ele
 
@@ -364,13 +359,13 @@ String formatMessageWithColorsLn({
             currentLabelLine.padRight(currentLabelLine.length + remainingSpace);
 
         // Adiciona a linha atual ao resultado
-        result.writeln("$currentLabelLine$dividerColor$divider");
+        result.writeln('$currentLabelLine$dividerColor$divider');
 
         // Inicia uma nova linha
-        currentLabelLine = "$dividerColor$divider $labelColor$word ";
+        currentLabelLine = '$dividerColor$divider $labelColor$word ';
         currentLabelLineLength = divider.length + 1 + word.length + 1;
       } else {
-        currentLabelLine += "$word ";
+        currentLabelLine += '$word ';
         currentLabelLineLength += word.length + 1;
       }
     }
@@ -379,16 +374,16 @@ String formatMessageWithColorsLn({
     int remainingSpace = maxCharsPerLine - currentLabelLineLength - fixedChars;
     currentLabelLine =
         currentLabelLine.padRight(currentLabelLine.length + remainingSpace);
-    result.writeln("$currentLabelLine$dividerColor$divider");
+    result.writeln('$currentLabelLine$dividerColor$divider');
   } else {
     // Preenche a linha da label com espaços em branco até o limite
     int remainingSpace = maxCharsPerLine - firstLineLength - fixedChars;
     firstLine = firstLine.padRight(firstLine.length + remainingSpace);
-    result.writeln("$firstLine$dividerColor$divider");
+    result.writeln('$firstLine$dividerColor$divider');
   }
 
   // Processa a mensagem
-  String currentLine = "$dividerColor$divider $messageColor";
+  String currentLine = '$dividerColor$divider $messageColor';
   int currentLineLength = divider.length + 1;
 
   List<String> words = message.split(' ');
@@ -402,13 +397,13 @@ String formatMessageWithColorsLn({
       currentLine = currentLine.padRight(currentLine.length + remainingSpace);
 
       // Adiciona a linha atual ao resultado
-      result.writeln("$currentLine$dividerColor$divider");
+      result.writeln('$currentLine$dividerColor$divider');
 
       // Inicia uma nova linha
-      currentLine = "$dividerColor$divider $messageColor$word ";
+      currentLine = '$dividerColor$divider $messageColor$word ';
       currentLineLength = divider.length + 1 + word.length + 1;
     } else {
-      currentLine += "$word ";
+      currentLine += '$word ';
       currentLineLength += word.length + 1;
     }
   }
@@ -416,7 +411,7 @@ String formatMessageWithColorsLn({
   // Preenche a última linha da mensagem com espaços em branco até o limite
   int remainingSpace = maxCharsPerLine - currentLineLength - fixedChars;
   currentLine = currentLine.padRight(currentLine.length + remainingSpace);
-  result.writeln("$currentLine$dividerColor$divider");
+  result.writeln('$currentLine$dividerColor$divider');
 
   return result.toString();
 }
@@ -444,7 +439,7 @@ String formatMessageWithColors({
   List<String> combinedWords = labelWords + messageWords;
 
   // Inicia a construção da linha atual
-  String currentLine = "$dividerColor$divider $labelColor";
+  String currentLine = '$dividerColor$divider $labelColor';
   int currentLineLength = divider.length + 1; // incluindo espaço após o divider
 
   bool labelProcessed = false;
@@ -464,17 +459,17 @@ String formatMessageWithColors({
       currentLine = currentLine.padRight(currentLine.length + remainingSpace);
 
       // Adiciona a linha atual ao resultado
-      result.writeln("$currentLine$dividerColor$divider");
+      result.writeln('$currentLine$dividerColor$divider');
 
       // Inicia uma nova linha com o divider e a cor apropriada
-      currentLine = "$dividerColor$divider ";
+      currentLine = '$dividerColor$divider ';
       currentLineLength = divider.length + 1;
 
       if (labelProcessed) {
-        currentLine += "$messageColor$word ";
+        currentLine += '$messageColor$word ';
         currentLineLength += messageColor.length + word.length + 1;
       } else {
-        currentLine += "$labelColor$word ";
+        currentLine += '$labelColor$word ';
         currentLineLength += labelColor.length + word.length + 1;
         labelProcessed = !combinedWords
             .sublist(labelWords.length)
@@ -482,7 +477,7 @@ String formatMessageWithColors({
       }
     } else {
       // Adiciona a palavra à linha atual
-      currentLine += "$word ";
+      currentLine += '$word ';
       currentLineLength += word.length + 1;
     }
 
@@ -495,7 +490,7 @@ String formatMessageWithColors({
   // Preenche a última linha com espaços em branco até o limite
   int remainingSpace = maxCharsPerLine - currentLineLength - fixedChars;
   currentLine = currentLine.padRight(currentLine.length + remainingSpace);
-  result.writeln("$currentLine$dividerColor$divider");
+  result.writeln('$currentLine$dividerColor$divider');
 
   return result.toString();
 }
@@ -630,19 +625,19 @@ String _lineGenerator({
 }) {
   final result = StringBuffer();
   if (content.isNotEmpty) {
-    result.write("$dividerColor$divider ");
+    result.write('$dividerColor$divider ');
 
     for (var word in content) {
       if (labelWords.contains(word)) {
-        result.write("$labelColor$word ");
+        result.write('$labelColor$word ');
       } else if (messageWords.contains(word)) {
-        result.write("$messageColor$word ");
+        result.write('$messageColor$word ');
       } else {
         result.write('$word ');
       }
     }
 
-    result.write("$dividerColor$divider$reset");
+    result.write('$dividerColor$divider$reset');
   }
   return result.toString();
 }

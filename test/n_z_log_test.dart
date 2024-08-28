@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:poc_ml/helpers/elegant_print.dart';
 import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 import 'package:poc_ml/n_z_log.dart';
 
@@ -53,6 +54,6 @@ void main() {
       dividerColor: XTermColor.red,
       maxCharsPerLine: 70,
     );
-    print(a);
+    write(a);
   });
 }

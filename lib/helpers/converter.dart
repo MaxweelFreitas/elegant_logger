@@ -1,7 +1,7 @@
 class Converter {
   static int hexToDec(String hexColor) {
     if (!_isValidHexadecimal(hexColor)) {
-      throw ArgumentError("Invalid hexadecimal string");
+      throw ArgumentError('Invalid hexadecimal string');
     }
 
     int len = hexColor.length;
