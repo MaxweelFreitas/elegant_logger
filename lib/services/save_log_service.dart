@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import '../helpers/elegant_print.dart';
 
 abstract class SaveLogService {
   String saveLog(String log, {String filePath = ''});
@@ -17,7 +17,9 @@ class TxtSaveLogService implements SaveLogService {
         // Obtém o diretório de documentos
         final directoryRootPath = Directory.current.path;
 
-        var pathRoot = Platform.isWindows ? '$directoryRootPath\\logs' : '$directoryRootPath/logs';
+        var pathRoot = Platform.isWindows
+            ? '$directoryRootPath\\logs'
+            : '$directoryRootPath/logs';
         final directoryLog = Directory(pathRoot);
 
         if (!directoryLog.existsSync()) {
@@ -38,7 +40,7 @@ class TxtSaveLogService implements SaveLogService {
 
       return path;
     } catch (e) {
-      debugPrint('Erro ao salvar log: $e');
+      write('Erro ao salvar log: $e');
       return '';
     }
   }
@@ -53,7 +55,9 @@ class JsonSaveLogService implements SaveLogService {
       if (filePath.isEmpty) {
         final directoryRootPath = Directory.current.path;
 
-        var pathRoot = Platform.isWindows ? '$directoryRootPath\\logs' : '$directoryRootPath/logs';
+        var pathRoot = Platform.isWindows
+            ? '$directoryRootPath\\logs'
+            : '$directoryRootPath/logs';
         final directoryLog = Directory(pathRoot);
 
         if (!directoryLog.existsSync()) {
@@ -93,7 +97,7 @@ class JsonSaveLogService implements SaveLogService {
 
       return path;
     } catch (e) {
-      debugPrint('Erro ao salvar log: $e');
+      write('Erro ao salvar log: $e');
       return '';
     }
   }

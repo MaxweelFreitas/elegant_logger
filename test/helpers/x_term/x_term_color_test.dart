@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 
 void main() {
   test('Colors', () {
-    print(XTermColor.printColors());
+    if (kDebugMode) {
+      print(XTermColor.printColors());
+    }
   });
   test(
       '${XTermColor.rgbFg(237, 142, 137)}█${XTermColor.rgbFg(247, 182, 133)}█${XTermColor.rgbFg(243, 235, 165)}█${XTermColor.rgbFg(148, 198, 145)}█${XTermColor.rgbFg(155, 214, 217)}█${XTermColor.rgbFg(180, 168, 224)}█${XTermColor.reset}${XTermColor.reset}   ⇒ Should return a RGB foreground color [53,55,89] ⇒ \x1B[38;2;53;55;89m██',

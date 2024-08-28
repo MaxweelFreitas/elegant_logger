@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 
+import 'helpers/elegant_print.dart';
 import 'helpers/x_term/x_term_style.dart';
 
 class NZLog {
@@ -244,7 +245,7 @@ _drawTop({
   } else {
     lineLength = lineLength + logType.length;
   }
-  debugPrint(
+  write(
     '$color${NZLog.rTopLeftCorner}$logType${_horizontalDivider(lineLength: lineLength)}${NZLog.rTopRightCorner}\x1B[0m',
   );
 }
@@ -266,7 +267,7 @@ _drawTitle({
       part = part.padRight(numCharacters);
     }
     String line = '| $bold$part$resetBold |';
-    debugPrint('$color$line\x1B[0m');
+    write('$color$line\x1B[0m');
   }
 }
 
@@ -298,7 +299,7 @@ _drawText({
 
   textLine.writeAll(parts, '\n');
 
-  debugPrint(
+  write(
     '$color$textLine\x1B[0m',
   );
 }
@@ -308,7 +309,7 @@ _drawMedium({
   int lineLength = 75,
   bool isDashed = false,
 }) {
-  debugPrint(
+  write(
     '$color${NZLog.middleleftCorner}${_horizontalDivider(lineLength: lineLength, isDashed: isDashed)}${NZLog.middleRightCorner}\x1B[0m',
   );
 }
@@ -317,7 +318,7 @@ _drawBottom({
   String color = '\x1B[37m',
   int lineLength = 75,
 }) {
-  debugPrint(
+  write(
     '$color${NZLog.rBottomLeftCorner}${_horizontalDivider(lineLength: lineLength)}${NZLog.rBottomRightCorner}\x1B[0m',
   );
 }
@@ -609,7 +610,7 @@ List<String> fillText({
       content: content,
     );
 
-    debugPrint(coloredLine);
+    write(coloredLine);
 
     return content;
   } else {

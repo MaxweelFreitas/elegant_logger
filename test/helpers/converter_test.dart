@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:poc_ml/helpers/converter.dart';
+import 'package:poc_ml/helpers/elegant_print.dart';
 import 'package:poc_ml/helpers/x_term/x_term_style.dart';
 
 void main() {
@@ -20,7 +21,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(result);
-      debugPrint(elapsedToHMS(stopwatch.elapsed));
+      write(elapsedToHMS(stopwatch.elapsed));
     }
   });
 
@@ -34,7 +35,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(result);
-      debugPrint(elapsedToHMS(stopwatch.elapsed));
+      write(elapsedToHMS(stopwatch.elapsed));
     }
   });
 
@@ -48,7 +49,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(result);
-      debugPrint(elapsedToHMS(stopwatch.elapsed));
+      write(elapsedToHMS(stopwatch.elapsed));
     }
   });
 
@@ -62,7 +63,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(result);
-      debugPrint(elapsedToHMS(stopwatch.elapsed));
+      write(elapsedToHMS(stopwatch.elapsed));
     }
   });
 }

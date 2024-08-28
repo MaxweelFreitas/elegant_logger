@@ -7,10 +7,8 @@
 /// The class provides a comprehensive set of named colors in the xterm-256color
 /// palette and utility methods to convert RGB and HEX colors into ANSI escape
 /// sequences for coloring text in terminals.
-///
 class XTermColor {
   /// Represents the ANSI escape sequence for reset colors.
-  ///
   static const reset = '\x1B[0m';
 
   // ForegroundColors

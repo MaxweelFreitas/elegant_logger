@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:poc_ml/dtos/log_level.dart';
 
 import 'elegant_box.dart';
+import 'elegant_print.dart';
 import 'x_term/x_term_color.dart';
 import 'x_term/x_term_style.dart';
 
@@ -46,7 +46,7 @@ class DrawFunctions {
         LevelAlignment.middle =>
           '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: hDivLenP2 + 1)}$content$borderColor${horizontalDivider(lineLength: hDivLenP2 + 1)}$boxTopRightBorder${XTermStyle.reset}',
       };
-      debugPrint(result);
+      write(result);
       return result;
     } else if (logLevel.icon.isNotEmpty && logLevel.name.isNotEmpty) {
       //Draw both
@@ -61,13 +61,13 @@ class DrawFunctions {
         LevelAlignment.middle =>
           '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: hDivLenP2 + 1)}$content$borderColor${horizontalDivider(lineLength: hDivLenP2 + 1)}$boxTopRightBorder${XTermStyle.reset}',
       };
-      debugPrint(result);
+      write(result);
       return result;
     } else {
       //TypedTop ⇒ ╭────────────────────────────────────────────────────────────╮
       final result =
           '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: lineLength)}$boxTopRightBorder${XTermStyle.reset}';
-      debugPrint(result);
+      write(result);
       return result;
     }
   }
@@ -96,7 +96,7 @@ class DrawFunctions {
 
     final result =
         '$borderColor$boxMiddleLeft${horizontalDivider(lineLength: lineLength, isDashed: isDashed)}$boxMiddleRight${XTermStyle.reset}';
-    debugPrint(result);
+    write(result);
     return result;
   }
 
@@ -110,7 +110,7 @@ class DrawFunctions {
     //Lined  ⇒ ╰──────────────────────────────────────────────────────────────────────────╯
     final result =
         '$borderColor$boxBottomLeftBorder${horizontalDivider(lineLength: lineLength)}$boxBottomRightBorder${XTermStyle.reset}';
-    debugPrint(result);
+    write(result);
     return result;
   }
 }

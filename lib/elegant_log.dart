@@ -9,6 +9,7 @@ import 'dtos/log_entry_color.dart';
 import 'dtos/log_entry_content.dart';
 import 'helpers/converter.dart';
 import 'helpers/draw_functions.dart';
+import 'helpers/elegant_print.dart';
 import 'services/save_log_service.dart';
 
 class ElegantLog {
@@ -463,7 +464,7 @@ Future<void> _box({
     );
   }
   if (printLogToFile) {
-    debugPrint('View logFile in $_logPath');
+    write('View logFile in $_logPath');
   }
 }
 
@@ -599,7 +600,7 @@ String drawText({
       content: content,
     );
 
-    debugPrint(coloredLine);
+    write(coloredLine);
 
     return (content, line);
   } else {

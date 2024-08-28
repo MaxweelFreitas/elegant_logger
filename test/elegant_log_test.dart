@@ -5,6 +5,7 @@ import 'package:poc_ml/dtos/log_level.dart';
 import 'package:poc_ml/elegant_log.dart';
 import 'package:poc_ml/helpers/converter.dart';
 import 'package:poc_ml/helpers/draw_functions.dart';
+import 'package:poc_ml/helpers/elegant_print.dart';
 import 'package:poc_ml/helpers/system.dart';
 import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 import 'package:poc_ml/helpers/x_term/x_term_style.dart';
@@ -42,7 +43,7 @@ void main() {
 
       stopwatch.stop();
       if (kDebugMode) {
-        debugPrint(elapsedToHMS(stopwatch.elapsed));
+        write(elapsedToHMS(stopwatch.elapsed));
       }
     });
 
@@ -70,7 +71,7 @@ void main() {
 
       stopwatch.stop();
       if (kDebugMode) {
-        debugPrint(elapsedToHMS(stopwatch.elapsed));
+        write(elapsedToHMS(stopwatch.elapsed));
       }
     });
 
@@ -98,7 +99,7 @@ void main() {
 
       stopwatch.stop();
       if (kDebugMode) {
-        debugPrint(elapsedToHMS(stopwatch.elapsed));
+        write(elapsedToHMS(stopwatch.elapsed));
       }
     });
 
@@ -126,7 +127,7 @@ void main() {
 
       stopwatch.stop();
       if (kDebugMode) {
-        debugPrint(elapsedToHMS(stopwatch.elapsed));
+        write(elapsedToHMS(stopwatch.elapsed));
       }
     });
   });
@@ -147,7 +148,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(a);
-      debugPrint(elapsedToHMS(stopwatch.elapsed));
+      write(elapsedToHMS(stopwatch.elapsed));
     }
   });
 
@@ -167,7 +168,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(a);
-      debugPrint(elapsedToHMS(stopwatch.elapsed));
+      write(elapsedToHMS(stopwatch.elapsed));
       print(XTermStyle.link(
           url: r'lib\n_z_log.dart', linkText: r'lib\n_z_log.dart'));
     }

@@ -13,7 +13,7 @@ void main() {
       fileName = System.getFileName(stacktrace);
     }
 
-    expect(removeEscapedANSI(fileName), 'test/helpers/system_test.dart:10:7');
+    expect(removeEscapedANSI(fileName), 'test/helpers/system_test.dart:11:7');
   });
 
   test('🗃️ ${XTermColor.green}getStackTraceLinks', () async {
@@ -27,7 +27,7 @@ void main() {
     expect(
       resultLinks,
       [
-        'test/helpers/system_test.dart:21:7',
+        'test/helpers/system_test.dart:22:7',
         'lib/src/backend/declarer.dart:215:19',
         'lib/src/backend/declarer.dart:213:7',
         'lib/src/backend/invoker.dart:258:9',

@@ -6,6 +6,7 @@ import '../helpers/elegant_box.dart';
 ///
 /// Output looks like this:
 /// ```dart
+///
 /// ┤ ⎕ ◻◻◻◻◻ ├
 ///
 /// ```
@@ -17,6 +18,7 @@ import '../helpers/elegant_box.dart';
 ///
 /// and they can all be replaced
 final class LogLevel {
+  /// @param prefix marcação gráfica apresentada antes do termo logLevel.
   final String prefix;
   final String icon;
   final String nameBgColor;
