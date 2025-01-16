@@ -135,7 +135,7 @@ Errors:
 
     colorize = InjectStr.customWord(
       colorize,
-      'POST',
+      '╭─',
       0,
       '\x1B[31m',
       line: 1,

@@ -139,30 +139,30 @@ class InjectStr {
   /// Returns the modified text.
   static String customWord(
     String text,
-    String word,
+    String word, // Palavra ou caractere passado pelo usuário
     int position,
     String modIn, {
-    String modOut = '\x1B[0m', //resetColor
+    String modOut = '\x1B[0m', // Reset color
     int line = 0,
     bool allLines = false,
   }) {
     // Split the text into lines
     List<String> lines = text.split('\n');
 
-    /// Helper function to process a single line and apply word modification.
+    /// Helper function to process a single line and apply word/character modification.
     String processLine(String lineText, int position) {
-      // Create a regular expression to match the word in the line
-      RegExp regExp = RegExp(RegExp.escape(word));
+      // Define a RegExp that allows matching any Unicode character, including extended ASCII
+      RegExp regExp =
+          RegExp(word, unicode: true); // Ensure Unicode is considered
       Iterable<Match> matches = regExp.allMatches(lineText);
-
       List<Match> matchList = matches.toList();
 
-      // If the position is valid, apply modification to the matched word at that position
+      // If the position is valid, apply modification to the matched word/character at that position
       if (matchList.isNotEmpty && position < matchList.length) {
         Match match = matchList[position];
-        String customizedWord = modIn + match.group(0)! + modOut;
+        String customizedMatch = modIn + match.group(0)! + modOut;
         lineText =
-            lineText.replaceRange(match.start, match.end, customizedWord);
+            lineText.replaceRange(match.start, match.end, customizedMatch);
       }
 
       return lineText;
