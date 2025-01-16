@@ -45,7 +45,7 @@ class DrawFunctions {
         LevelAlignment.middle =>
           '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: hDivLenP2 + 1)}$content$borderColor${horizontalDivider(lineLength: hDivLenP2 + 1)}$boxTopRightBorder${XTermStyle.reset}',
       };
-      write(result);
+      eLog(result);
       return result;
     } else if (logLevel.icon.isNotEmpty && logLevel.name.isNotEmpty) {
       //Draw both
@@ -60,13 +60,13 @@ class DrawFunctions {
         LevelAlignment.middle =>
           '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: hDivLenP2 + 1)}$content$borderColor${horizontalDivider(lineLength: hDivLenP2 + 1)}$boxTopRightBorder${XTermStyle.reset}',
       };
-      write(result);
+      eLog(result);
       return result;
     } else {
       //TypedTop ⇒ ╭────────────────────────────────────────────────────────────╮
       final result =
           '$borderColor$boxTopLeftBorder${horizontalDivider(lineLength: lineLength)}$boxTopRightBorder${XTermStyle.reset}';
-      write(result);
+      eLog(result);
       return result;
     }
   }
@@ -95,7 +95,7 @@ class DrawFunctions {
 
     final result =
         '$borderColor$boxMiddleLeft${horizontalDivider(lineLength: lineLength, isDashed: isDashed)}$boxMiddleRight${XTermStyle.reset}';
-    write(result);
+    eLog(result);
     return result;
   }
 
@@ -109,7 +109,7 @@ class DrawFunctions {
     //Lined  ⇒ ╰──────────────────────────────────────────────────────────────────────────╯
     final result =
         '$borderColor$boxBottomLeftBorder${horizontalDivider(lineLength: lineLength)}$boxBottomRightBorder${XTermStyle.reset}';
-    write(result);
+    eLog(result);
     return result;
   }
 }

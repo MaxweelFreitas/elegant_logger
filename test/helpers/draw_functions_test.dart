@@ -7,7 +7,7 @@ void main() {
   group('drawFunctions TOP ⇒', () {
     test('simple', () {
       final result = DrawFunctions.drawTop();
-      write(result);
+      eLog(result);
     });
 
     test('icon left', () {
@@ -18,7 +18,7 @@ void main() {
         ),
       );
 
-      write(result);
+      eLog(result);
     });
 
     test('icon right', () {
@@ -29,7 +29,7 @@ void main() {
         ),
       );
 
-      write(result);
+      eLog(result);
     });
 
     test('icon middle', () {
@@ -39,7 +39,7 @@ void main() {
         ),
       );
 
-      write(result);
+      eLog(result);
     });
 
     test('icon + name left', () {
@@ -51,7 +51,7 @@ void main() {
         ),
       );
 
-      write(result);
+      eLog(result);
     });
     test('icon + name right', () {
       final result = DrawFunctions.drawTop(
@@ -62,7 +62,7 @@ void main() {
         ),
       );
 
-      write(result);
+      eLog(result);
     });
     test('icon + name middle', () {
       final result = DrawFunctions.drawTop(
@@ -72,19 +72,19 @@ void main() {
         ),
       );
 
-      write(result);
+      eLog(result);
     });
 
     test('medium', () {
       final result = DrawFunctions.drawMedium(isDashed: true);
 
-      write(result);
+      eLog(result);
     });
 
     test('bottom', () {
       final result = DrawFunctions.drawBottom();
 
-      write(result);
+      eLog(result);
     });
   });
 }

@@ -33,6 +33,6 @@ void main() {
       valueColor: XTermColor.magenta,
     );
 
-    write(result);
+    eLog(result);
   });
 }

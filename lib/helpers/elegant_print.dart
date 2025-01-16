@@ -12,7 +12,7 @@ import 'package:flutter/foundation.dart';
 ///
 /// - [message]: The message to be printed. If `null` or empty, the function
 ///   returns without printing anything.
-void write(String? message) {
+void eLog(String? message) {
   if (message == null || message.isEmpty) {
     return;
   }

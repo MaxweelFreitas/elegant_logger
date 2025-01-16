@@ -41,7 +41,7 @@ void main() {
 
       stopwatch.stop();
       if (kDebugMode) {
-        write(elapsedToHMS(stopwatch.elapsed));
+        eLog(elapsedToHMS(stopwatch.elapsed));
       }
     });
 
@@ -68,7 +68,7 @@ void main() {
 
       stopwatch.stop();
       if (kDebugMode) {
-        write(elapsedToHMS(stopwatch.elapsed));
+        eLog(elapsedToHMS(stopwatch.elapsed));
       }
     });
 
@@ -95,7 +95,7 @@ void main() {
 
       stopwatch.stop();
       if (kDebugMode) {
-        write(elapsedToHMS(stopwatch.elapsed));
+        eLog(elapsedToHMS(stopwatch.elapsed));
       }
     });
 
@@ -122,7 +122,7 @@ void main() {
 
       stopwatch.stop();
       if (kDebugMode) {
-        write(elapsedToHMS(stopwatch.elapsed));
+        eLog(elapsedToHMS(stopwatch.elapsed));
       }
     });
   });
@@ -143,7 +143,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(a);
-      write(elapsedToHMS(stopwatch.elapsed));
+      eLog(elapsedToHMS(stopwatch.elapsed));
     }
   });
 
@@ -162,7 +162,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(a);
-      write(elapsedToHMS(stopwatch.elapsed));
+      eLog(elapsedToHMS(stopwatch.elapsed));
       print(XTermStyle.link(
           url: r'lib\n_z_log.dart', linkText: r'lib\n_z_log.dart'));
     }

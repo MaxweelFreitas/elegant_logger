@@ -40,7 +40,7 @@ class TxtSaveLogService implements SaveLogService {
 
       return path;
     } on Exception catch (e) {
-      write('Erro ao salvar log: $e');
+      eLog('Erro ao salvar log: $e');
       return '';
     }
   }
@@ -97,7 +97,7 @@ class JsonSaveLogService implements SaveLogService {
 
       return path;
     } on Exception catch (e) {
-      write('Erro ao salvar log: $e');
+      eLog('Erro ao salvar log: $e');
       return '';
     }
   }

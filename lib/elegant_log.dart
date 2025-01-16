@@ -425,7 +425,7 @@ Future<void> _box({
     );
   }
   if (printLogToFile) {
-    write('View logFile in $logPath');
+    eLog('View logFile in $logPath');
   }
 }
 
@@ -566,7 +566,7 @@ String drawText({
       content: content,
     );
 
-    write(coloredLine);
+    eLog(coloredLine);
 
     return (content, line);
   } else {

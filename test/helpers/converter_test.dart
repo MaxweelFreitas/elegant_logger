@@ -21,7 +21,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(result);
-      write(elapsedToHMS(stopwatch.elapsed));
+      eLog(elapsedToHMS(stopwatch.elapsed));
     }
   });
 
@@ -35,7 +35,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(result);
-      write(elapsedToHMS(stopwatch.elapsed));
+      eLog(elapsedToHMS(stopwatch.elapsed));
     }
   });
 
@@ -49,7 +49,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(result);
-      write(elapsedToHMS(stopwatch.elapsed));
+      eLog(elapsedToHMS(stopwatch.elapsed));
     }
   });
 
@@ -63,7 +63,7 @@ void main() {
     stopwatch.stop();
     if (kDebugMode) {
       print(result);
-      write(elapsedToHMS(stopwatch.elapsed));
+      eLog(elapsedToHMS(stopwatch.elapsed));
     }
   });
 }
