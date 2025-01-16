@@ -9,7 +9,7 @@ void main() {
 
     try {
       throw ArgumentError('Invalid argument');
-    } catch (e, stacktrace) {
+    } on Exception catch (e, stacktrace) {
       fileName = System.getFileName(stacktrace);
     }
 
@@ -20,7 +20,7 @@ void main() {
     List<String> resultLinks;
     try {
       throw ArgumentError('Invalid argument');
-    } catch (e, stacktrace) {
+    } on Exception catch (e, stacktrace) {
       resultLinks = System.getStackTraceLinks(stacktrace);
     }
 

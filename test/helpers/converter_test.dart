@@ -41,9 +41,9 @@ void main() {
 
   test('Should cleanUp all the string from ANSI scapesCode', () {
     final stopwatch = Stopwatch()..start();
-    const url = r'https://www.google.com';
+    // const url = r'https://www.google.com';
     const linkText = r'https://www.google.com';
-    final link = XTermStyle.link(linkText: linkText, url: url);
+    final link = XTermStyle.link(linkText: linkText);
     final result = removeEscapedANSI(link);
 
     stopwatch.stop();

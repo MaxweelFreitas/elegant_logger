@@ -53,7 +53,11 @@ class Tree {
     }
 
     void printNode(
-        String name, dynamic value, String currentIndent, bool isLast) {
+      String name,
+      dynamic value,
+      String currentIndent,
+      bool isLast,
+    ) {
       final branch = isLast
           ? '$branchLastColor$branchLast$resetColor'
           : '$branchMidColor$branchMid$resetColor';

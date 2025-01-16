@@ -39,7 +39,7 @@ class TxtSaveLogService implements SaveLogService {
       file.writeAsStringSync('$log\n', mode: FileMode.append);
 
       return path;
-    } catch (e) {
+    } on Exception catch (e) {
       write('Erro ao salvar log: $e');
       return '';
     }
@@ -90,13 +90,13 @@ class JsonSaveLogService implements SaveLogService {
 
         jsonContent.add(logEntry);
 
-        file.writeAsStringSync(jsonEncode(jsonContent), mode: FileMode.write);
+        file.writeAsStringSync(jsonEncode(jsonContent));
       } else {
         file.writeAsStringSync(jsonEncode([logEntry]));
       }
 
       return path;
-    } catch (e) {
+    } on Exception catch (e) {
       write('Erro ao salvar log: $e');
       return '';
     }

@@ -1,5 +1,4 @@
-import 'package:poc_ml/dtos/log_level.dart';
-
+import '../dtos/log_level.dart';
 import 'elegant_box.dart';
 import 'elegant_print.dart';
 import 'x_term/x_term_color.dart';

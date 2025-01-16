@@ -29,7 +29,6 @@ void main() {
       jsonString: exampleJsonString,
       lineLength: 50,
       dividerColor: XTermColor.red,
-      bracketColor: XTermColor.white,
       keyColor: XTermColor.green,
       valueColor: XTermColor.magenta,
     );

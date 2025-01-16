@@ -4,7 +4,6 @@ import 'package:poc_ml/dtos/log_entry_content.dart';
 import 'package:poc_ml/dtos/log_level.dart';
 import 'package:poc_ml/elegant_log.dart';
 import 'package:poc_ml/helpers/converter.dart';
-import 'package:poc_ml/helpers/draw_functions.dart';
 import 'package:poc_ml/helpers/elegant_print.dart';
 import 'package:poc_ml/helpers/system.dart';
 import 'package:poc_ml/helpers/x_term/x_term_color.dart';
@@ -17,14 +16,13 @@ void main() {
       List<String> resultLinks;
       try {
         throw ArgumentError('Invalid argument');
-      } catch (e, stacktrace) {
+      } on Exception catch (e, stacktrace) {
         fileName = System.getFileName(stacktrace);
         resultLinks = System.getStackTraceLinks(stacktrace);
       }
 
       final stopwatch = Stopwatch()..start();
       ElegantLog.error(
-        levelAlignment: LevelAlignment.left,
         logEntryContent: LogEntryContent(
           labelTitle: 'Title:',
           title: 'Title of my error',
@@ -50,7 +48,6 @@ void main() {
     test('Warning', () {
       final stopwatch = Stopwatch()..start();
       ElegantLog.warning(
-        levelAlignment: LevelAlignment.left,
         logLevel: const LogLevel(
           icon: '🚧',
           name: ' Warning',
@@ -78,7 +75,6 @@ void main() {
     test('Info', () {
       final stopwatch = Stopwatch()..start();
       ElegantLog.info(
-        levelAlignment: LevelAlignment.left,
         logLevel: const LogLevel(
           icon: '📢',
           name: ' Info',
@@ -106,7 +102,6 @@ void main() {
     test('Debug', () {
       final stopwatch = Stopwatch()..start();
       ElegantLog.debug(
-        levelAlignment: LevelAlignment.left,
         logLevel: const LogLevel(
           icon: '🐜',
           name: ' Debug',
@@ -162,7 +157,6 @@ void main() {
       message: removeEscapedANSI(XTermStyle.link(
           url: r'lib\n_z_log.dart', linkText: r'lib\n_z_log.dart')),
       dividerColor: XTermColor.red,
-      maxCharsPerLine: 60,
     );
 
     stopwatch.stop();

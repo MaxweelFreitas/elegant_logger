@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
-import 'package:poc_ml/dtos/border_box.dart';
-import 'package:poc_ml/dtos/log_level.dart';
-import 'package:poc_ml/helpers/elegant_icons.dart';
-import 'package:poc_ml/helpers/x_term/x_term_color.dart';
-import 'package:poc_ml/helpers/x_term/x_term_style.dart';
 
+import 'dtos/border_box.dart';
 import 'dtos/log_entry_color.dart';
 import 'dtos/log_entry_content.dart';
+import 'dtos/log_level.dart';
 import 'helpers/converter.dart';
 import 'helpers/draw_functions.dart';
+import 'helpers/elegant_icons.dart';
 import 'helpers/elegant_print.dart';
+import 'helpers/x_term/x_term_color.dart';
+import 'helpers/x_term/x_term_style.dart';
 import 'services/save_log_service.dart';
 
 class ElegantLog {
@@ -29,10 +29,7 @@ class ElegantLog {
       labelTimeColor: XTermColor.red,
       timeColor: XTermColor.white,
       labelTitleColor: XTermColor.red,
-      titleColor: XTermColor.white,
       labelMessageColor: XTermColor.red,
-      messageColor: XTermColor.white,
-      sourceColor: XTermColor.white,
     ),
     int lineLength = 75,
     bool isDated = true,
@@ -81,25 +78,13 @@ class ElegantLog {
     bool printLogToFile = true,
     BorderBox borders = const BorderBox(),
     int lineLength = 75,
-    LogEntryContent logEntryContent = const LogEntryContent(
-      divider: '|',
-      title: '',
-      labelTime: '',
-      time: '',
-      message: '',
-      source: '',
-      url: '',
-      linkText: '',
-    ),
+    LogEntryContent logEntryContent = const LogEntryContent(),
     LogEntryColor logEntryColor = const LogEntryColor(
       dividerColor: XTermColor.yellow,
       labelTimeColor: XTermColor.yellow,
       timeColor: XTermColor.white,
       labelTitleColor: XTermColor.yellow,
-      titleColor: XTermColor.white,
       labelMessageColor: XTermColor.yellow,
-      messageColor: XTermColor.white,
-      sourceColor: XTermColor.white,
     ),
     LevelAlignment levelAlignment = LevelAlignment.left,
     bool isDated = true,
@@ -144,21 +129,9 @@ class ElegantLog {
       labelTimeColor: XTermColor.blue,
       timeColor: XTermColor.white,
       labelTitleColor: XTermColor.blue,
-      titleColor: XTermColor.white,
       labelMessageColor: XTermColor.blue,
-      messageColor: XTermColor.white,
-      sourceColor: XTermColor.white,
     ),
-    LogEntryContent logEntryContent = const LogEntryContent(
-      divider: '|',
-      title: '',
-      labelTime: '',
-      time: '',
-      message: '',
-      source: '',
-      linkText: '',
-      url: '',
-    ),
+    LogEntryContent logEntryContent = const LogEntryContent(),
     LogLevel logLevel = const LogLevel(
       icon: ElegantIcons.infoIcon,
       name: 'Info ',
@@ -203,25 +176,13 @@ class ElegantLog {
   static void debug({
     BorderBox borders = const BorderBox(),
     bool printLogToFile = true,
-    LogEntryContent logEntryContent = const LogEntryContent(
-      divider: '|',
-      title: '',
-      labelTime: '',
-      time: '',
-      message: '',
-      source: '',
-      url: '',
-      linkText: '',
-    ),
+    LogEntryContent logEntryContent = const LogEntryContent(),
     LogEntryColor logEntryColor = const LogEntryColor(
       dividerColor: XTermColor.magenta,
       labelTimeColor: XTermColor.magenta,
       timeColor: XTermColor.white,
       labelTitleColor: XTermColor.magenta,
-      titleColor: XTermColor.white,
       labelMessageColor: XTermColor.magenta,
-      messageColor: XTermColor.white,
-      sourceColor: XTermColor.white,
     ),
     LogLevel logLevel = const LogLevel(
       icon: ElegantIcons.debugIcon,
@@ -306,7 +267,7 @@ Future<void> _box({
   bool forcePrint = false,
   bool printLogToFile = true,
 }) async {
-  String _logPath = '';
+  String logPath = '';
   final SaveLogService saveService = JsonSaveLogService();
   // final SaveLogService saveService = TxtSaveLogService();
   if (kDebugMode || forcePrint) {
@@ -330,8 +291,8 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(
-          printLogToFile, _logPath, saveService, titleLog, divider);
+      logPath =
+          printLogFile(printLogToFile, logPath, saveService, titleLog, divider);
     }
 
     DrawFunctions.drawMedium(
@@ -353,8 +314,8 @@ Future<void> _box({
         printLogToFile: printLogToFile,
         maxCharsPerLine: lineLength,
       );
-      _logPath = printLogFile(
-          printLogToFile, _logPath, saveService, titleLog, divider);
+      logPath =
+          printLogFile(printLogToFile, logPath, saveService, titleLog, divider);
     }
 
     DrawFunctions.drawMedium(
@@ -380,8 +341,8 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(
-          printLogToFile, _logPath, saveService, messageLog, divider);
+      logPath = printLogFile(
+          printLogToFile, logPath, saveService, messageLog, divider);
     }
 
     DrawFunctions.drawMedium(
@@ -403,8 +364,8 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(
-          printLogToFile, _logPath, saveService, messageLog, divider);
+      logPath = printLogFile(
+          printLogToFile, logPath, saveService, messageLog, divider);
     }
     DrawFunctions.drawMedium(
       borderColor: dividerColor,
@@ -427,7 +388,7 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(printLogToFile, _logPath, saveService,
+      logPath = printLogFile(printLogToFile, logPath, saveService,
           'Link: $linkText - $url', divider);
     }
 
@@ -440,7 +401,7 @@ Future<void> _box({
     );
 
     if (url.isNotEmpty) {
-      final linkMessage = XTermStyle.link(url: url, linkText: linkText);
+      // final linkMessage = XTermStyle.link(url: url, linkText: linkText);
 
       drawText(
         dividerColor: dividerColor,
@@ -452,7 +413,7 @@ Future<void> _box({
         maxCharsPerLine: lineLength,
         printLogToFile: printLogToFile,
       );
-      _logPath = printLogFile(printLogToFile, _logPath, saveService,
+      logPath = printLogFile(printLogToFile, logPath, saveService,
           'Link: $linkText - $url', divider);
     }
 
@@ -464,17 +425,22 @@ Future<void> _box({
     );
   }
   if (printLogToFile) {
-    write('View logFile in $_logPath');
+    write('View logFile in $logPath');
   }
 }
 
-String printLogFile(bool printLogToFile, String _logPath,
-    SaveLogService saveService, String titleLog, String divider) {
+String printLogFile(
+  bool printLogToFile,
+  String logPath,
+  SaveLogService saveService,
+  String titleLog,
+  String divider,
+) {
   if (printLogToFile) {
     // _logPath = await saveService.saveLog(titleLog, filePath: _logPath);
     return saveService.saveLog(
         removeEscapedANSI(titleLog).replaceAll(divider, '').trim(),
-        filePath: _logPath);
+        filePath: logPath);
   }
   return '';
 }

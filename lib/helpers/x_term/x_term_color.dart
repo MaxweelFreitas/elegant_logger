@@ -225,7 +225,7 @@ class XTermColor {
 
     // Expand shorthand #RGB to #RRGGBB
     if (cleanedColor.length == 3) {
-      cleanedColor = cleanedColor.split('').map((c) => '$c$c').join('');
+      cleanedColor = cleanedColor.split('').map((c) => '$c$c').join();
     }
 
     // Handle #RGBA and #RRGGBBAA formats by stripping the alpha channel
@@ -233,7 +233,7 @@ class XTermColor {
       cleanedColor = cleanedColor
           .split('')
           .map((c) => '$c$c')
-          .join('')
+          .join()
           .substring(0, 6); // Ignore the first two characters (alpha)
     } else if (cleanedColor.length == 8) {
       cleanedColor =
@@ -278,7 +278,7 @@ class XTermColor {
 
     // Expand shorthand #RGB to #RRGGBB
     if (cleanedColor.length == 3) {
-      cleanedColor = cleanedColor.split('').map((c) => '$c$c').join('');
+      cleanedColor = cleanedColor.split('').map((c) => '$c$c').join();
     }
 
     // Handle #RGBA and #RRGGBBAA formats by stripping the alpha channel
@@ -286,7 +286,7 @@ class XTermColor {
       cleanedColor = cleanedColor
           .split('')
           .map((c) => '$c$c')
-          .join('')
+          .join()
           .substring(0, 6); // Ignore the first two characters (alpha)
     } else if (cleanedColor.length == 8) {
       cleanedColor =

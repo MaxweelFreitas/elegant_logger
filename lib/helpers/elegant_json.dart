@@ -34,7 +34,7 @@ class ElegantJson {
       }
 
       return output.toString();
-    } catch (e) {
+    } on Exception catch (e) {
       return 'Invalid JSON: $e';
     }
   }
