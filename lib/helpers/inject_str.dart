@@ -56,18 +56,34 @@ class InjectStr {
   /// String result = InjectStr.between("I love Dart and Flutter.", "love", "and", "and React");
   /// print(result); // Output: "I love and React Dart and Flutter."
   /// ```
+  @Deprecated('It bug when use with customWord')
   static String between(
-      String text, String keywordBefore, String keywordAfter, String toInject) {
+    String text,
+    String keywordBefore,
+    String keywordAfter,
+    String modIn, {
+    String modOut = '\x1B[0m', // Reset color
+  }) {
+    // Encontrar as posições das palavras-chave
     int startIndex = text.indexOf(keywordBefore);
     int endIndex =
         text.indexOf(keywordAfter, startIndex + keywordBefore.length);
 
+    // Verificar se as palavras-chave foram encontradas
     if (startIndex == -1 || endIndex == -1) {
-      return text; // If any keyword is not found, return original text
+      return text; // Se não encontrar, retorna o texto original
     }
 
+    // Extrair o conteúdo entre as palavras-chave
+    String contentBetween =
+        text.substring(startIndex + keywordBefore.length, endIndex);
+
+    // Aplica o modificador de início e fim ao conteúdo
+    String modifiedContent = modIn + contentBetween + modOut;
+
+    // Retorna o texto com o conteúdo modificado entre as palavras-chave
     return text.substring(0, startIndex + keywordBefore.length) +
-        toInject +
+        modifiedContent +
         text.substring(endIndex);
   }
 
@@ -102,28 +118,6 @@ class InjectStr {
     return text;
   }
 
-  /// Replaces all occurrences of a word in the text with a new word.
-  ///
-  /// The [text] parameter is the original string where the word replacement will occur.
-  /// The [word] parameter is the word to replace, and [newWord] is the word that will
-  /// replace all instances of [word] in the text.
-  ///
-  /// You can optionally pass a [regex] to modify the search behavior.
-  ///
-  /// Example:
-  /// ```
-  /// String result = InjectStr.replaceAll("I love Dart. Dart is great!", "Dart", "Flutter");
-  /// print(result); // Output: "I love Flutter. Flutter is great!"
-  /// ```
-  static String replaceAll(String text, String word, String newWord,
-      {RegExp? regex}) {
-    if (word.isEmpty) {
-      return text;
-    }
-    RegExp regExp = regex ?? RegExp(r'\b' + RegExp.escape(word) + r'\b');
-    return text.replaceAll(regExp, newWord);
-  }
-
   /// Customizes a word at a specified position in a given text by wrapping it
   /// with the provided modifiers. The customization can be applied to either a
   /// specific line or all lines in the text.
@@ -142,7 +136,7 @@ class InjectStr {
     String word, // Palavra ou caractere passado pelo usuário
     int position,
     String modIn, {
-    String modOut = '\x1B[0m', // Reset color
+    String modOut = '', // Reset color
     int line = 0,
     bool allLines = false,
   }) {
@@ -151,9 +145,11 @@ class InjectStr {
 
     /// Helper function to process a single line and apply word/character modification.
     String processLine(String lineText, int position) {
-      // Define a RegExp that allows matching any Unicode character, including extended ASCII
-      RegExp regExp =
-          RegExp(word, unicode: true); // Ensure Unicode is considered
+      // Create a RegExp with case sensitivity and Unicode enabled
+      RegExp regExp = RegExp(
+        RegExp.escape(word), // Escape any special characters in the word
+        unicode: true,
+      );
       Iterable<Match> matches = regExp.allMatches(lineText);
       List<Match> matchList = matches.toList();
 
@@ -186,6 +182,133 @@ class InjectStr {
     // Join the modified lines back into a single text string
     return modifiedLines.join('\n');
   }
+
+  static String customChar(
+    String text,
+    String word, // Palavra ou caractere passado pelo usuário
+    String modIn, {
+    String modOut = '', // Reset color
+  }) {
+    // Substitui todas as ocorrências da palavra ou caractere com a formatação
+    return text.replaceAll(word, '$modIn$word$modOut');
+  }
+
+  static String customBorder(String text, String modIn, String modOut) {
+    // Separa o texto em linhas
+    List<String> linhas = text.split('\n');
+
+    // Aplica a customização na primeira linha
+    if (linhas.isNotEmpty) {
+      String primeiraLinha = linhas[0];
+      if (primeiraLinha.isNotEmpty) {
+        linhas[0] =
+            primeiraLinha.split('').map((char) => '$modIn$char$modOut').join();
+      }
+
+      // Aplica a customização na última linha
+      if (linhas.length > 1) {
+        String ultimaLinha = linhas[linhas.length - 1];
+        if (ultimaLinha.isNotEmpty) {
+          linhas[linhas.length - 1] =
+              ultimaLinha.split('').map((char) => '$modIn$char$modOut').join();
+        }
+      }
+    }
+
+    // Aplica a customização para as linhas intermediárias (primeiro e último caractere)
+    for (int i = 1; i < linhas.length - 1; i++) {
+      String linha = linhas[i];
+
+      if (linha.isNotEmpty) {
+        String primeiraParte = '$modIn${linha[0]}$modOut';
+        String ultimaParte = '$modIn${linha[linha.length - 1]}$modOut';
+
+        // Se a linha tem mais de um caractere, combina a primeira e última parte com o meio da linha
+        if (linha.length > 1) {
+          linhas[i] =
+              '$primeiraParte${linha.substring(1, linha.length - 1)}$ultimaParte';
+        } else {
+          // Caso a linha tenha apenas um caractere, aplica os modificadores nele
+          linhas[i] = '$primeiraParte$ultimaParte';
+        }
+      }
+    }
+
+    // Junta novamente todas as linhas em uma única string
+    return linhas.join('\n');
+  }
+
+  static String betweenA(
+    String text,
+    String keywordBefore,
+    String keywordAfter,
+    String modIn, {
+    String modOut = '\x1B[0m', // Reset color
+    int? line, // Linha onde começar a busca (nulo se não for especificado)
+    int?
+        position, // Posição da incidência inicial (nulo se não for especificado)
+    bool allIncidences =
+        true, // Se true, retorna todas as incidências, caso contrário, retorna uma
+  }) {
+    // Função para remover temporariamente as sequências ANSI
+    String removeAnsi(String input) {
+      return input.replaceAll(RegExp(r'\x1B\[[0-9;]*m'), '');
+    }
+
+    // Limpeza do texto para procurar palavras-chave sem interferência das ANSI
+    String cleanedText = removeAnsi(text);
+
+    // Lista para armazenar todas as incidências encontradas
+    List<String> contentsBetween = [];
+
+    int startIndex = 0;
+    int lineCounter = 0;
+    int startLineIndex = 0;
+
+    // Procurando as incidências linha por linha
+    while (true) {
+      // Encontrar o próximo índice da keywordBefore
+      startIndex = cleanedText.indexOf(keywordBefore, startIndex);
+      if (startIndex == -1) break; // Se não encontrar mais, sai do loop
+
+      int endIndex =
+          cleanedText.indexOf(keywordAfter, startIndex + keywordBefore.length);
+      if (endIndex == -1) break; // Se não encontrar a keywordAfter, sai do loop
+
+      // Calcular a linha atual com base no número de quebras de linha
+      String substring = cleanedText.substring(startLineIndex, startIndex);
+      int currentLine = substring.split('\n').length;
+
+      // Se a linha atual é maior ou igual à linha desejada, extrair o conteúdo
+      if (line == null || currentLine >= line) {
+        String contentBetween =
+            cleanedText.substring(startIndex + keywordBefore.length, endIndex);
+        contentsBetween.add(contentBetween);
+      }
+
+      // Avança o índice para a próxima busca
+      startLineIndex = endIndex + keywordAfter.length;
+      startIndex = startLineIndex;
+    }
+
+    // Filtrando com base na posição e no parâmetro allIncidences
+    if (contentsBetween.isEmpty) {
+      return text; // Se não encontrar nenhuma incidência, retorna o texto original
+    }
+
+    // Se não for especificado um position, retorna a primeira incidência
+    if (position == null) {
+      position = 0;
+    }
+
+    if (!allIncidences) {
+      // Retorna apenas a incidência na posição desejada
+      return contentsBetween.length > position ? contentsBetween[position] : '';
+    }
+
+    // Retorna todas as incidências encontradas
+    return contentsBetween.join('\n'); // Ou outro formato desejado
+  }
 }
 
 void main() {
@@ -216,20 +339,4 @@ void main() {
   );
   // Output: "I love Dart, Flutter is great! I also enjoy Dart."
   print(resultReplaceAtPosition);
-
-  // 5. Using 'replaceAtPosition' with custom regex (replace all digits with 'X')
-  String textWithNumbers = 'Order 12345 and 67890';
-  String resultReplaceCustomRegex = InjectStr.replaceAll(
-    textWithNumbers,
-    '0',
-    'X',
-    regex: RegExp(r'\d+'),
-  );
-  // Output: "Order X and X"
-  print(resultReplaceCustomRegex);
-
-  // 6. Using 'replaceAll' method with default regex
-  String resultReplaceAll = InjectStr.replaceAll(text, 'Dart', 'Flutter');
-  // Output: "I love Flutter, Flutter is great! I also enjoy Flutter."
-  print(resultReplaceAll);
 }

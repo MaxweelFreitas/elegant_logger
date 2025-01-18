@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:poc_ml/helpers/inject_str.dart';
+import 'package:poc_ml/helpers/x_term/x_term_color.dart';
 
 void main() {
   test('api model ...', () {
@@ -133,16 +134,38 @@ Errors:
 
     String colorize = result;
 
-    colorize = InjectStr.customWord(
-      colorize,
-      '╭─',
-      0,
-      '\x1B[31m',
-      line: 1,
-      // allLines: true,
-    );
+    colorize = InjectStr.customWord(colorize, '╭', 0, XTermColor.cyan);
+    colorize = InjectStr.between(colorize, '╭', '╮', XTermColor.red);
+    colorize = InjectStr.customWord(colorize, '╮', 0, XTermColor.cyan);
+    // colorize =
+    //     InjectStr.customWord(colorize, '╰', 0, XTermColor.cyan, allLines: true);
+    // colorize =
+    //     InjectStr.customWord(colorize, '╯', 0, XTermColor.cyan, allLines: true);
+    // colorize = InjectStr.customWord(colorize, '├─', 0, XTermColor.cyan,
+    //     allLines: true);
+    // colorize = InjectStr.customWord(colorize, '└─', 0, XTermColor.cyan,
+    //     allLines: true);
+    // colorize = InjectStr.customWord(colorize, '─┤', 0, XTermColor.cyan,
+    //     allLines: true);
+
+    ///////
+    // colorize =
+    //     InjectStr.customWord(colorize, '╴', 0, XTermColor.cyan, allLines: true);
 
     print(colorize);
+
+    String text = '''
+Start [INFO] This is some content [INFO] Middle [INFO] Another content [INFO] End
+''';
+
+    String result1 = InjectStr.between(
+      text,
+      '[INFO]', // Palavra-chave antes
+      '[INFO]', // Palavra-chave depois
+      '\x1B[32m',
+    );
+
+    print(result1);
   });
 
   test('api model ...', () {
@@ -244,4 +267,82 @@ Errors:
     print(
         '$cyan╰─────────────────────────────────────────────────────────────────────────╯$reset');
   });
+
+  test('azed', () {
+    String result = '''
+╭──────────────────────────────────────────────────────────────────────╮
+│ [2025-01-16 14:23:45] [INFO] [API ConsumptionçÇ]                     │
+├──────────────────────────────────────────────────────────────────────┤
+├╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴┤
+''';
+    String colorize = result;
+
+    //   colorize = InjectStr.customWord(colorize, '╭', 0, XTermColor.green);
+    //   colorize = InjectStr.between(colorize, '╭', '╮', XTermColor.red);
+    //   colorize = InjectStr.customWord(colorize, '╮', 0, XTermColor.green,
+    //       modOut: XTermColor.reset);
+
+    //   print(colorize);
+
+    //   colorize = InjectStr.customWord(colorize, '|', 0, XTermColor.cyan,
+    //       modOut: XTermColor.reset,
+    //       // line: 1,
+    //       allLines: true);
+
+    //   colorize = InjectStr.customWord(
+    //       colorize, '[API Consumption]', 0, XTermColor.yellow,
+    //       line: 1, allLines: true);
+
+    //   print(colorize);
+    //   colorize = InjectStr.between(colorize, '├', '┤', XTermColor.cyanBright);
+
+    colorize = InjectStr.customChar(colorize, '─', XTermColor.magenta,
+        modOut: XTermColor.reset);
+
+    colorize = InjectStr.customChar(colorize, '╴', XTermColor.magentaBright,
+        modOut: XTermColor.reset);
+
+    print(colorize);
+  });
+
+  test('customizeWord', () {
+    String result = '''
+╭──────────────────────────────────────────────────────────────────────╮
+│ [2025-01-16 14:23:45] [INFO] [API ConsumptionçÇ]                     │
+├──────────────────────────────────────────────────────────────────────┤
+│ [2025-01-16 14:23:45] [BUG] [API Consumption 0]                      │
+├╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴╴┤
+╰──────────────────────────────────────────────────────────────────────╯''';
+    String colorize = result;
+
+    // colorize =
+    //     InjectStr.customBorder(colorize, XTermColor.red, XTermColor.reset);
+    // colorize = InjectStr.customChar(colorize, '─', XTermColor.red,
+    //     modOut: XTermColor.reset);
+    // colorize = InjectStr.customChar(colorize, '╴', XTermColor.redBright,
+    //     modOut: XTermColor.reset);
+    // colorize = InjectStr.customWord(colorize, 'INFO', 0, XTermColor.yellow,
+    //     allLines: true, modOut: XTermColor.reset);
+    colorize = InjectStr.customChar(colorize, '[', XTermColor.red,
+        modOut: XTermColor.reset);
+
+    colorize = InjectStr.betweenA(
+      colorize,
+      '[',
+      ']',
+      XTermColor.yellow,
+      allIncidences: false,
+    );
+
+    print(colorize);
+  });
 }
+
+RegExp ansiColorRegExp = RegExp(r'''
+  \x1B\[(3[0-7]|9[0-7])m |                # Foreground colors (30-37, 90-97)
+  \x1B\[(4[0-7]|10[0-7])m |               # Background colors (40-47, 100-107)
+  \x1B\[38;5;([0-9]{1,3})m |              # Foreground colors (256-color mode: 0-255)
+  \x1B\[48;5;([0-9]{1,3})m |              # Background colors (256-color mode: 0-255)
+  \x1B\[38;2;([0-9]{1,3});([0-9]{1,3});([0-9]{1,3})m |  # Foreground colors (RGB: 0-255)
+  \x1B\[48;2;([0-9]{1,3});([0-9]{1,3});([0-9]{1,3})m   # Background colors (RGB: 0-255)
+''', multiLine: true, dotAll: true);
